@@ -1,0 +1,8 @@
+ERR271731_R1_trimmed.fastq.gz	pubiflorum_BCC2028_R1_trimmed.fastq.gz
+ERR271731_R2_trimmed.fastq.gz	pubiflorum_BCC2028_R2_trimmed.fastq.gz
+ERR271732_R1_trimmed.fastq.gz	bulbosum01_R1_trimmed.fastq.gz
+ERR271732_R2_trimmed.fastq.gz	bulbosum01_R2_trimmed.fastq.gz
+ERR271733_R1_trimmed.fastq.gz	bulbosum02_R1_trimmed.fastq.gz
+ERR271733_R2_trimmed.fastq.gz	bulbosum02_R2_trimmed.fastq.gz
+ERR271734_R1_trimmed.fastq.gz	bulbosum_A12_R1_trimmed.fastq.gz
+ERR271734_R2_trimmed.fastq.gz	bulbosum_A12_R2_trimmed.fastq.gz
