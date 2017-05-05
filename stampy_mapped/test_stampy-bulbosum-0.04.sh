@@ -21,7 +21,7 @@ REF_DIR='/home/morrellp/liux1299/scratch/outgroups'
 #   What is our per site substitution rate?
 DIVERGENCE='0.04'
 #   Where do our output files go?
-OUT_DIR=
+OUT_DIR='/home/morrellp/liux1299/scratch/outgroups'
 #   What is our forward read?
 FORWARD='/home/morrellp/liux1299/scratch/outgroups/Adapter_Trimming/bulbosum02_R1_trimmed.fastq.gz'
 #   What is our reverse read?
