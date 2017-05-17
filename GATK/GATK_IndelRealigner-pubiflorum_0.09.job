@@ -13,7 +13,7 @@
 module load java
 
 #	Directory where finished BAM files are stored
-OUT_DIR=/panfs/roc/scratch/liux1299/Hpubiflorum/realigned
+OUT_DIR=/home/morrellp/liux1299/scratch/outgroups/realigned
 #   File that includes full path to BAM files
 BAM_LIST=/home/morrellp/liux1299/scratch/outgroups/SAM_Processing/Picard/Finished/pubiflorum_0.09.txt
 
