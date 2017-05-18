@@ -13,7 +13,7 @@ ANC_BAM=/home/morrellp/liux1299/scratch/outgroups/realigned/pubiflorum_BCC2028_t
 
 #   What should we call the output file?
 #       Defaults to the same name as the ancestal BAM file
-OUT_NAME=pubiflorum_BCC2028_0.09.bam
+OUT_NAME=pubiflorum_BCC2028_0.09
 
 #   Where should we put the output file?
 #       Defaults to the same directory as the ancestral BAM file.
@@ -25,7 +25,7 @@ OUT=${OUT_DIR}/${OUT_NAME}
 #   Ancestral Sequence Parameters
 #       Listed below are the defaults, please modify for your samples
 #       Extract FASTA sequence from BAM file
-DO_FASTA=3
+DO_FASTA=2
 #       Count allele frequencies
 #       If DO_FASTA is 2, DO_COUNTS must be 1
 #       Otherwise, DO_COUNTS can be any other legal value
