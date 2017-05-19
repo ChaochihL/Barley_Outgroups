@@ -31,7 +31,7 @@ exit 1
 
 #   Dependencies
 module load bedtools/2.17.0 # Use this version because higher version produces weird output files
-module load datamash_ML
+module load datamash_ML/1.1.0
 module load parallel
 
 #   Function to calculate coverage
