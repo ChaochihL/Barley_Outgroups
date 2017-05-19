@@ -18,9 +18,11 @@ H. bulbosum and H. pubiflorum samples were published in the [Mascher et al. 2013
 
 ## Where are the output files located?
 
-Filepaths last updated: May 15, 2017
+Filepaths last updated: May 19, 2017
 
-Directory: `/home/morrellp/liux1299/scratch/outgroups`
+H. pubiflorum Realigned BAM and FASTA Directory:
+
+`/home/morrellp/liux1299/Shared/Datasets/NGS/Alignments/Outgroup_Sequences/outgroup_partsRef/H_pubiflorum`
 
 ---
 
