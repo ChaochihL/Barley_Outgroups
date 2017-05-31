@@ -3,7 +3,7 @@
 #PBS -l mem=252gb,nodes=1:ppn=24,walltime=96:00:00
 #PBS -m abe
 #PBS -M liux1299@umn.edu
-#PBS -q mesabi
+#PBS -q ram256g
 
 set -e
 set -o pipefail
