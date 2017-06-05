@@ -30,11 +30,16 @@ H. pubiflorum Realigned BAM and FASTA Directory:
 
 #### Stampy
 
-Samples were trimmed by Paul using `sequence_handling` Adapter_Trimming and `/home/morrellp/liux1299/Shared/References/Adapters/MascherAdapters.fasta` adapters. Next, I used [Stampy 1.0.31](http://www.well.ox.ac.uk/project-stampy) to map the samples. I mapped pubiflorum with Stampy using 9%, 10%, and 11% divergence rates and got SAM files. Then I used `sequence_handling` SAM_Processing to get finished BAM files and BAM stats.  Based on the statistics reported, there is no difference seen when using the 3 different divergence rates.
+Samples were trimmed by Paul using `sequence_handling` Adapter_Trimming and `/home/morrellp/liux1299/Shared/References/Adapters/MascherAdapters.fasta` adapters. Next, I used [Stampy 1.0.31](http://www.well.ox.ac.uk/project-stampy) to map the samples. I mapped pubiflorum with Stampy using 9%, 10%, and 11% divergence rates and got SAM files. Then I used `sequence_handling` SAM_Processing to get finished BAM files and BAM stats.  Based on the statistics reported, there is no difference seen when using the 3 different divergence rates for the pubiflorum sample.
+
+I mapped bulbosum_A12 with Stampy using 3%, 4%, and 5% divergence rates. After processing the SAM files with `sequence_handling`, I got BAM file statistics. The statistics showed differences with the different divergence rates:
+- 3% divergence: 98.09% mapped, 78.80% properly paired, and 0.66% singletons
+- 4% divergence: 98.07% mapped, 78.40% properly paired, and 0.67% singletons
+- 5% divergence: 98.04% mapped, 78.21% properly paired, and 0.69% singletons
 
 #### GATK Indel Realignment
 
-We will proceed by realigning pubiflorum mapped with 9% divergence rate but also test pubiflorum mapped with 5%, 7%, and 8% divergence rates to report in the manuscript.
+We will proceed by realigning pubiflorum mapped with 9% divergence rate but also test pubiflorum mapped with 5%, 7%, and 8% divergence rates to report in the manuscript. We realigned bulbosum_A12 mapped with 3% divergence rate.
 
 #### BAM to FASTA
 
