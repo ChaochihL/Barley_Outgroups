@@ -23,9 +23,9 @@ DIVERGENCE='0.07'
 #   Where do our output files go?
 OUT_DIR='/home/morrellp/liux1299/scratch/outgroups/stampy_mapped'
 #   What is our forward read?
-FORWARD='/home/morrellp/liux1299/scratch/outgroups/pubiflorum_BCC2028_R1_trimmed.fastq.gz'
+FORWARD='/home/morrellp/liux1299/scratch/outgroups/Adapter_Trimming/pubiflorum_BCC2028_R1_trimmed.fastq.gz'
 #   What is our reverse read?
-REVERSE='/home/morrellp/liux1299/scratch/outgroups/pubiflorum_BCC2028_R2_trimmed.fastq.gz'
+REVERSE='/home/morrellp/liux1299/scratch/outgroups/Adapter_Trimming/pubiflorum_BCC2028_R2_trimmed.fastq.gz'
 #   Takes our forward read and generates sample name for output file
 SAMPLE_NAME="$(basename ${FORWARD} | cut -f 1 -d '.')"
 
