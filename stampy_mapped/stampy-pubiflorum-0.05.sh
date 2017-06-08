@@ -27,7 +27,7 @@ FORWARD='/home/morrellp/liux1299/scratch/outgroups/Adapter_Trimming/pubiflorum_B
 #   What is our reverse read?
 REVERSE='/home/morrellp/liux1299/scratch/outgroups/Adapter_Trimming/pubiflorum_BCC2028_R2_trimmed.fastq.gz'
 #   Takes our forward read and generates sample name for output file
-SAMPLE_NAME="$(basename ${FORWARD} | cut -f 1 -d '.')"
+SAMPLE_NAME="pubiflorum_BCC2028"
 
 #   Stampy test run
 #       -g is the genome index file, PREFIX.stidx
