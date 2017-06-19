@@ -276,7 +276,7 @@ SP_QSUB="mem=22gb,nodes=1:ppn=16,walltime=24:00:00"
 #   Where is the list of read-mapped samples?
 #       To generate this list, use sample_list_generator.sh
 #       located at /sequence_handling/OldScripts/sample_list_generator.sh
-MAPPED_LIST=/home/morrellp/liux1299/scratch/outgroups/pubiflorum_sam.txt
+MAPPED_LIST=/home/morrellp/liux1299/scratch/outgroups/stampy_mapped/pubiflorum_sam.txt
 
 #   Specify the index type
 #       Choose from 'BAI' or 'CSI'
