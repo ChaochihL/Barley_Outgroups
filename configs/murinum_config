@@ -23,7 +23,7 @@ EMAIL=liux1299@umn.edu
 #       the sequence encoding. Choose from:
 #           'sanger', 'illumina'
 #           'solexa', or 'phred'
-QUAL_ENCODING=
+QUAL_ENCODING=sanger
 
 #   Sequencing platform technology
 #       What platform were the reads produced?
@@ -31,7 +31,7 @@ QUAL_ENCODING=
 #           CAPILLARY, LS454, ILLUMINA,
 #           SOLID, HELICOS, IONTORRENT
 #           ONT, and PACBIO
-SEQ_PLATFORM=
+SEQ_PLATFORM=ILLUMINA
 
 #   What reference genome are we using?
 #       Include the full file path.
@@ -91,7 +91,7 @@ ALTERNATE_SAMPLES=
 
 #   What are our QSub settings for Adapter_Trimming?
 #       Below are the recommended settings
-AT_QSUB="mem=1gb,nodes=1:ppn=4,walltime=10:00:00"
+AT_QSUB="mem=22gb,nodes=1:ppn=16,walltime=24:00:00"
 
 #   What shared suffix do the forward samples have?
 #       Example: _1_sequence.txt.gz
@@ -107,7 +107,7 @@ REVERSE_NAMING=_R2.fastq.gz
 #       match your samples
 
 #	What is our adapter file? Include the full file path.
-ADAPTERS=
+ADAPTERS=/home/morrellp/liux1299/Shared/References/Adapters/MiniSeq-NextSeq-HiSeq3000-HiSeq4000-i5_adapters_rev_comp.fa
 
 #   What is Scythe's prior contamination rate?
 #       Scythe's documentation suggests starting at
