@@ -83,7 +83,7 @@ TARGET=NA
 #   Optional: Provide an alternate list of FastQ, SAM, or BAM files to be used, rather than RAW_SAMPLES
 #       To run Quality_Assessment on RAW_SAMPLES, leave this blank
 #       Include the full file path.
-ALTERNATE_SAMPLES=
+ALTERNATE_SAMPLES=/home/morrellp/liux1299/scratch/outgroups/Adapter_Trimming/murinum_trimmed_adapters.txt
 
 ############################################
 ##########    Adapter_Trimming    ##########
