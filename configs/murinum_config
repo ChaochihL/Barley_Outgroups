@@ -107,7 +107,7 @@ REVERSE_NAMING=_R2.fastq.gz
 #       match your samples
 
 #	What is our adapter file? Include the full file path.
-ADAPTERS=/home/morrellp/liux1299/Shared/References/Adapters/MiniSeq-NextSeq-HiSeq3000-HiSeq4000-i5_adapters_rev_comp.fa
+ADAPTERS=/home/morrellp/liux1299/Shared/References/Adapters/complete_fastqc_adapters.list
 
 #   What is Scythe's prior contamination rate?
 #       Scythe's documentation suggests starting at
