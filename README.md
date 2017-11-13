@@ -43,10 +43,10 @@ H. murinum Realigned BAM and FASTQ Directory:
 
 Samples were trimmed by Paul using `sequence_handling` Adapter_Trimming and `/home/morrellp/liux1299/Shared/References/Adapters/MascherAdapters.fasta` adapters. Next, I used [Stampy 1.0.31](http://www.well.ox.ac.uk/project-stampy) to map the samples to `barley_pseudomolecules_parts.fa` reference. I mapped pubiflorum with Stampy using 9%, 10%, and 11% divergence rates and got SAM files. Then I used `sequence_handling` SAM_Processing to get finished BAM files and BAM stats.  Based on the statistics reported, there is no difference seen when using the 3 different divergence rates for the pubiflorum sample.
 
-For H murinum sample, initially tried adapter trimming using recommended adapters for NextSeq platform but the FastQC results indicated the following overrepresented sequences for the trimmed sample: `GATCGGAAGAGCACACGTCTGAACTCCAGTCACATCACGATCTCGTATGC`. The possible source for this overrepresented sequence was suggested to be from TruSeq Adapter, Index 1. So, I re-ran adapter trimming using the following adapter sequences: `/home/morrellp/liux1299/Shared/References/Adapters/adapter_from_Shichen_Wang.fa` because the overrepresented sequence was in this adapters file. The command used to check this is:
+For H murinum sample, initially tried adapter trimming using recommended adapters for NextSeq platform but the FastQC results indicated the following overrepresented sequences for the trimmed sample: `GATCGGAAGAGCACACGTCTGAACTCCAGTCACATCACGATCTCGTATGC`. The possible source for this overrepresented sequence was suggested to be from TruSeq Adapter, Index 1. So, I re-ran adapter trimming using the following adapter sequences: `/home/morrellp/liux1299/Shared/References/Adapters/novogene_truseq_adapters.fa` because the overrepresented sequence was in this adapters file and this adapters list is shorter than `/home/morrellp/liux1299/Shared/References/Adapters/adapter_from_Shichen_Wang.fa` meaning it is less resource intensive. The command used to check this is:
 
 ```bash
-grep "GATCGGAAGAGCACACGTCTGAACTCCAGTCACATCACGATCTCGTATGC" adapter_from_Shichen_Wang.fa
+grep "GATCGGAAGAGCACACGTCTGAACTCCAGTCACATCACGATCTCGTATGC" *
 ```
 
 I mapped bulbosum_A12 with Stampy using 3%, 4%, and 5% divergence rates. After processing the SAM files with `sequence_handling`, I got BAM file statistics. The statistics showed differences with the different divergence rates:
