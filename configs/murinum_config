@@ -91,7 +91,7 @@ ALTERNATE_SAMPLES=/home/morrellp/liux1299/scratch/outgroups/Adapter_Trimming/mur
 
 #   What are our QSub settings for Adapter_Trimming?
 #       Below are the recommended settings
-AT_QSUB="mem=62gb,nodes=1:ppn=24,walltime=60:00:00"
+AT_QSUB="mem=62gb,nodes=4:ppn=18,walltime=96:00:00"
 
 #   What shared suffix do the forward samples have?
 #       Example: _1_sequence.txt.gz
