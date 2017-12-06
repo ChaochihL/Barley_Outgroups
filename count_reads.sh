@@ -10,6 +10,9 @@ set -o pipefail
 
 module load parallel
 
+#   Export path to bioawk
+export PATH=/panfs/roc/groups/9/morrellp/liux1299/Software/bioawk/bioawk:${PATH}
+
 #   This script uses bioawk (https://github.com/lh3/bioawk) to count the number of
 #       reads in a .fastq.gz file and outputs a .txt file with read counts
 
