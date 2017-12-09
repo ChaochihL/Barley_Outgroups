@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#PBS -l mem=16gb,nodes=1:ppn=16,walltime=02:00:00
+#PBS -l mem=22gb,nodes=1:ppn=16,walltime=24:00:00
 #PBS -m abe
 #PBS -M liux1299@umn.edu
 #PBS -q lab 
@@ -13,8 +13,8 @@ module load parallel
 #   This script uses bioawk (https://github.com/lh3/bioawk) to count the number of
 #       reads in a .fastq.gz file and outputs a .txt file with read counts
 BIOAWK=/panfs/roc/groups/9/morrellp/liux1299/Software/bioawk/bioawk
-SAMPLE_LIST=/home/morrellp/liux1299/scratch/outgroups/Adapter_Trimming/murinum_trimmed_adapters.txt
-OUT_FILENAME=murinum_trimmed_read_counts.txt
+SAMPLE_LIST=/home/morrellp/liux1299/scratch/outgroups/Adapter_Trimming/murinum_trimmed_parts.txt
+OUT_FILENAME=murinum_trimmed_read_counts_parts.txt
 OUT_DIR=/home/morrellp/liux1299/scratch/outgroups/Adapter_Trimming
 
 #   Check that out directory exists, if not make one
