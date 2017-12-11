@@ -49,6 +49,12 @@ For H murinum sample, initially tried adapter trimming using recommended adapter
 grep "GATCGGAAGAGCACACGTCTGAACTCCAGTCACATCACGATCTCGTATGC" *
 ```
 
+Since H murinum sample was too large, the trimmed fastq file for both forward and reverse reads were split into 16 files using the `split_forward.job` and `split_reverse.job` scripts. Then used the following commands to submit `stampy-murinum-0.11.sh` script as job array:
+
+```bash
+
+```
+
 I mapped bulbosum_A12 with Stampy using 3%, 4%, and 5% divergence rates. After processing the SAM files with `sequence_handling`, I got BAM file statistics. The statistics showed differences with the different divergence rates:
 - 3% divergence: 98.09% mapped, 78.80% properly paired, and 0.66% singletons
 - 4% divergence: 98.07% mapped, 78.40% properly paired, and 0.67% singletons
