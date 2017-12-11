@@ -52,7 +52,11 @@ grep "GATCGGAAGAGCACACGTCTGAACTCCAGTCACATCACGATCTCGTATGC" *
 Since H murinum sample was too large, the trimmed fastq file for both forward and reverse reads were split into 16 files using the `split_forward.job` and `split_reverse.job` scripts. Then used the following commands to submit `stampy-murinum-0.11.sh` script as job array:
 
 ```bash
-
+#   What is the maximum number of Torque tasks (# in array)
+#   Note: array is 0 indexed
+SINGLE_ARRAY_LIMIT=15
+#   Submit job
+echo "source /panfs/roc/groups/9/morrellp/liux1299/GitHub/Barley_Outgroups/stampy_mapped/stampy-murinum-0.11.sh && /panfs/roc/groups/9/morrellp/liux1299/GitHub/Barley_Outgroups/stampy_mapped/stampy-murinum-0.11.sh" | qsub -t 0-"${SINGLE_ARRAY_LIMIT}" -q mesabi -l mem=62gb,nodes=1:ppn=24,walltime=96:00:00 -m abe -M liux1299@umn.edu
 ```
 
 I mapped bulbosum_A12 with Stampy using 3%, 4%, and 5% divergence rates. After processing the SAM files with `sequence_handling`, I got BAM file statistics. The statistics showed differences with the different divergence rates:

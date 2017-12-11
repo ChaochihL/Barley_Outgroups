@@ -13,9 +13,6 @@ module load stampy_ML/1.0.31
 #   Number of threads available
 #   Note this has to match number of threads requested
 N_THREADS=24
-#   What is the maximum number of Torque tasks (# in array)
-#   Note: array is 0 indexed
-SINGLE_ARRAY_LIMIT=15
 #   Reference prefix must match .stidx files
 REF_PREFIX='barley_pseudomolecules_parts'
 #   What directory contains our reference files?
