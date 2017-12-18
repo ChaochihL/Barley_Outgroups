@@ -267,12 +267,12 @@ METHOD=picard
 
 #   What are our QSub settings for SAM_Processing?
 #       Below are the recommended settings
-SP_QSUB="mem=62gb,nodes=1:ppn=16,walltime=24:00:00"
+SP_QSUB="mem=62gb,nodes=1:ppn=16,walltime=48:00:00"
 
 #   Where is the list of read-mapped samples?
 #       To generate this list, use sample_list_generator.sh
 #       located at /sequence_handling/HelperScripts/sample_list_generator.sh
-MAPPED_LIST=/panfs/roc/scratch/liux1299/outgroups/stampy_mapped/murinum_sam.txt
+MAPPED_LIST=/panfs/roc/scratch/liux1299/outgroups/stampy_mapped/murinum_sam_0.09.txt
 
 #   The next two variables are only used if processing with Picard
 #   If using SAMtools, leave these variables blank
