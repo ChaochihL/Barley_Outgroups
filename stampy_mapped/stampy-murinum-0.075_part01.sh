@@ -14,6 +14,9 @@ set -o pipefail
 module load stampy_ML/1.0.31
 
 #   User provided arguments
+#   Number of threads available
+#   Note this has to match number of threads requested
+N_THREADS=24
 #   Reference prefix must match .stidx files
 REF_PREFIX='barley_pseudomolecules_parts'
 #   What directory contains our reference files?
@@ -40,6 +43,7 @@ cd ${REF_DIR}
 stampy -g "${REF_PREFIX}" \
        -h "${REF_PREFIX}" \
        --substitutionrate="${DIVERGENCE}" \
+       -t "${N_THREADS}" \
        -f sam \
        -o "${OUT_DIR}/${SAMPLE_NAME}_0.075.sam" \
        -M "${FORWARD}","${REVERSE}"

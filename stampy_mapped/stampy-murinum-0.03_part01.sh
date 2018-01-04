@@ -14,12 +14,15 @@ set -o pipefail
 module load stampy_ML/1.0.31
 
 #   User provided arguments
+#   Number of threads available
+#   Note this has to match number of threads requested
+N_THREADS=24
 #   Reference prefix must match .stidx files
 REF_PREFIX='barley_pseudomolecules_parts'
 #   What directory contains our reference files?
 REF_DIR='/home/morrellp/liux1299/scratch/outgroups'
 #   What is our per site substitution rate?
-DIVERGENCE='0.10'
+DIVERGENCE='0.03'
 #   Where do our output files go?
 OUT_DIR='/home/morrellp/liux1299/scratch/outgroups/stampy_mapped'
 #   What is our forward read?
@@ -40,6 +43,7 @@ cd ${REF_DIR}
 stampy -g "${REF_PREFIX}" \
        -h "${REF_PREFIX}" \
        --substitutionrate="${DIVERGENCE}" \
+       -t "${N_THREADS}" \
        -f sam \
-       -o "${OUT_DIR}/${SAMPLE_NAME}_0.10.sam" \
+       -o "${OUT_DIR}/${SAMPLE_NAME}_0.03.sam" \
        -M "${FORWARD}","${REVERSE}"
