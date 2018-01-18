@@ -73,6 +73,12 @@ echo "source /panfs/roc/groups/9/morrellp/liux1299/GitHub/Barley_Outgroups/stamp
 #   Note: array is 0 indexed
 SINGLE_ARRAY_LIMIT=15
 echo "source /panfs/roc/groups/9/morrellp/liux1299/GitHub/Barley_Outgroups/stampy_mapped/stampy-murinum-0.09.sh && /panfs/roc/groups/9/morrellp/liux1299/GitHub/Barley_Outgroups/stampy_mapped/stampy-murinum-0.09.sh" | qsub -t 0-"${SINGLE_ARRAY_LIMIT}" -q mesabi -l mem=62gb,nodes=1:ppn=24,walltime=72:00:00 -m abe -M liux1299@umn.edu
+
+#   Map with 3% divergence
+#   What is the maximum number of Torque tasks (# in array)
+#   Note: array is 0 indexed
+SINGLE_ARRAY_LIMIT=15
+echo "source /panfs/roc/groups/9/morrellp/liux1299/GitHub/Barley_Outgroups/stampy_mapped/stampy-murinum-0.03.sh && /panfs/roc/groups/9/morrellp/liux1299/GitHub/Barley_Outgroups/stampy_mapped/stampy-murinum-0.03.sh" | qsub -t 0-"${SINGLE_ARRAY_LIMIT}" -q mesabi -l mem=62gb,nodes=1:ppn=24,walltime=72:00:00 -m abe -M liux1299@umn.edu
 ```
 
 After mapping all H murinum parts (file was split into 16 parts) with Stampy using 11% divergence rates, processing SAM files with `sequence_handling`, and getting finished BAM statistics, the statistics showed ~80% mapped, ~25% properly paired, and ~2% singletons. To try and improve mapping, I mapped all H murinum parts using 9% divergence rates and picked one set of reads (part01) to test 5%, 7.5%, and 10% divergence rates. The logic for using 9% divergence rate for all the parts was based on Li downloading ITS sequences of H murinum subsp. leporinum, H murinum subsp. murinum, and H vulgare subsp vulgare and aligning the the two murinum subspecies to vulgare in Geneious. Li then counted the number of base pairs that differed in the alignments.
