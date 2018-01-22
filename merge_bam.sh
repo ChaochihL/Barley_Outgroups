@@ -13,7 +13,7 @@ set -o pipefail
 #       and was intended to be submitted as a job on MSI
 
 #   Dependencies
-samtools_ML/1.3.1
+module load samtools_ML/1.3.1
 
 #   User provided arguments
 BAM_LIST=/panfs/roc/scratch/liux1299/outgroups/SAM_Processing/Picard/murinum_bam_list_0.03.txt
@@ -24,3 +24,4 @@ OUT_FILE=murinum_0.03.bam
 mkdir -p "${OUT_DIR}"
 #   Merge bam files
 samtools merge -b "${BAM_LIST}" "${OUT_DIR}"/"${OUT_FILE}"
+
