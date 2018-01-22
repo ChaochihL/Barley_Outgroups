@@ -81,15 +81,19 @@ SINGLE_ARRAY_LIMIT=15
 echo "source /panfs/roc/groups/9/morrellp/liux1299/GitHub/Barley_Outgroups/stampy_mapped/stampy-murinum-0.03.sh && /panfs/roc/groups/9/morrellp/liux1299/GitHub/Barley_Outgroups/stampy_mapped/stampy-murinum-0.03.sh" | qsub -t 0-"${SINGLE_ARRAY_LIMIT}" -q mesabi -l mem=62gb,nodes=1:ppn=24,walltime=72:00:00 -m abe -M liux1299@umn.edu
 ```
 
-After mapping all H murinum parts (file was split into 16 parts) with Stampy using 11% divergence rates, processing SAM files with `sequence_handling`, and getting finished BAM statistics, the statistics showed ~80% mapped, ~25% properly paired, and ~2% singletons. To try and improve mapping, I mapped all H murinum parts using 9% divergence rates and picked one set of reads (part01) to test 5%, 7.5%, and 10% divergence rates. The logic for using 9% divergence rate for all the parts was based on Li downloading ITS sequences of H murinum subsp. leporinum, H murinum subsp. murinum, and H vulgare subsp vulgare and aligning the the two murinum subspecies to vulgare in Geneious. Li then counted the number of base pairs that differed in the alignments.
+After mapping all H murinum parts (file was split into 16 parts) with Stampy using 11% divergence rates, processing SAM files with `sequence_handling`, and getting finished BAM statistics, the statistics showed ~80% mapped, ~25% properly paired, and ~2% singletons. To try and improve mapping, I mapped all H murinum parts using 9% divergence rates and picked one set of reads (part01) to test 3%, 5%, and 7.5% divergence rates. The original logic for trying 9% divergence rate for all the parts was based on Li downloading ITS sequences of H murinum subsp. leporinum, H murinum subsp. murinum, and H vulgare subsp vulgare and aligning the the two murinum subspecies to vulgare in Geneious. Li then counted the number of base pairs that differed in the alignments.
 - For H murinum subsp leporinum aligned to H vulgare subsp. vulgare: 57 different bps out of 606
    - Divergence calculated by: 57/606 = 9.4%
 - For H murinum subsp murinum aligned to H vulgare subsp. vulgare: 59 different bps out of 602
    - Divergence calculated by: 59/602 = 9.8%
 
+3% divergence rate mapped the best for the murinum parts with between 76%-83% of reads mapped and 20%-26% of reads were properly paired. There were 1.6%-4.6% singletons across the parts.
+
+Prior to indel realignment, the murinum parts were merged into a single BAM file using the `merge_bam.sh` script. Next, the headers were fixed for the merged BAM file using Li's [`fixBAMHeader.sh` script](https://github.com/lilei1/Utilites/blob/master/script/fixBAMHeader.sh).
+
 ### GATK Indel Realignment - Bulbosum, Pubiflorum, Murinum
 
-We will proceed by realigning pubiflorum mapped with 9% divergence rate but also test pubiflorum mapped with 5%, 7%, and 8% divergence rates to report in the manuscript. We realigned bulbosum_A12 mapped with 3% divergence rate.
+We will proceed by realigning pubiflorum mapped with 9% divergence rate but also test pubiflorum mapped with 5%, 7%, and 8% divergence rates to report in the manuscript. We realigned bulbosum_A12 mapped with 3% divergence rate and realigned murinum with 3% divergence rate.
 
 ### BAM to FASTA - Bulbosum, Pubiflorum, Murinum
 
