@@ -15,7 +15,7 @@ set -o pipefail
     #   2. [bamFile_dir] is where our BAM files are located
 
 #   Dependencies
-module load samtools
+module load samtools/1.6
 module load parallel
 
 #   Arguments provided by user
