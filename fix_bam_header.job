@@ -14,10 +14,10 @@ module load samtools_ML/1.3.1
 
 #   User provided arguments
 FIX_BAM_HEADER_SCRIPT=/home/morrellp/liux1299/GitHub/Barley_Outgroups/fixBAMHeader.sh
-TABLE=/home/morrellp/liux1299/scratch/outgroups/merged_bam/merged_bam_rename_table.txt
+TABLE=/home/morrellp/liux1299/scratch/outgroups/reheader_bam/bam_reheader_table.txt
 PLATFORM=ILLUMINA
-SAMPLE_LIST=/home/morrellp/liux1299/scratch/outgroups/merged_bam/merged_bam_list.txt
-OUT_DIR=/home/morrellp/liux1299/scratch/outgroups/merged_bam
+SAMPLE_LIST=/home/morrellp/liux1299/scratch/outgroups/SAM_Processing/Picard/murinum_bam_list_0.03.txt
+OUT_DIR=/home/morrellp/liux1299/scratch/outgroups/reheader_bam
 
 #   Run program
 "${FIX_BAM_HEADER_SCRIPT}" -t "${TABLE}" \
