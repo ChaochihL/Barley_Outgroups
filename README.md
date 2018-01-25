@@ -98,7 +98,7 @@ samtools view -H murinum_0.03.bam | grep "@RG" | cut -f 2 | sed 's/ID://g' > mer
 #   Make sure this table has trailing new line at the end
 new_name="murinum "
 old_names=$(cat merged_bam_sample_names.txt | tr '\n' ' ')
-echo $new_name $old_names > merged_bam_rename_table.txt
+echo $new_name $old_names > bam_reheader_table.txt
 
 #   Submitted job script as job on MSI
 qsub fix_bam_header.job
