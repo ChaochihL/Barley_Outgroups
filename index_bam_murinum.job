@@ -1,0 +1,41 @@
+#!/bin/bash
+
+#PBS -l mem=22gb,nodes=1:ppn=16,walltime=24:00:00
+#PBS -m abe
+#PBS -M liux1299@umn.edu
+#PBS -q lab
+
+set -e
+set -u
+set -o pipefail
+
+#   Define usage message
+#   Note: The following paths to arguments will need to be hardcoded \n\
+    #   1. [bamFile_list] is a list of bam files to be indexed
+    #   2. [bamFile_dir] is where our BAM files are located
+
+#   Dependencies
+module load samtools
+module load parallel
+
+#   Arguments provided by user
+#   list of bam files
+BAM_LIST=/home/morrellp/liux1299/scratch/outgroups/merged_bam/reheader_bam_list.txt
+#   where are our BAM files located?
+OUT_DIR=/home/morrellp/liux1299/scratch/outgroups/merged_bam
+
+#   Function to index bam files
+function indexBAM() {
+    local BAMFile="$1"
+    local out_dir="$2"
+    #   Sample name
+    sampleName=`basename "${BAMFile}" .bam`
+    #   Create BAI index for BAM file
+    samtools index -b "${out_dir}/${sampleName}.bam"
+}
+
+#   Export function
+export -f indexBAM
+
+#   Do the work
+parallel indexBAM {} "${OUT_DIR}" :::: "${BAM_LIST}"
