@@ -89,7 +89,20 @@ After mapping all H murinum parts (file was split into 16 parts) with Stampy usi
 
 3% divergence rate mapped the best for the murinum parts with between 76%-83% of reads mapped and 20%-26% of reads were properly paired. There were 1.6%-4.6% singletons across the parts.
 
-Prior to indel realignment, the murinum parts were merged into a single BAM file using the `merge_bam.sh` script. Next, the headers were fixed for the merged BAM file using Li's [`fixBAMHeader.sh` script](https://github.com/lilei1/Utilites/blob/master/script/fixBAMHeader.sh).
+Prior to indel realignment, the murinum parts were merged into a single BAM file using the `merge_bam.sh` script. Next, the headers were fixed for the merged BAM file using Li's [`fixBAMHeader.sh` script](https://github.com/lilei1/Utilites/blob/master/script/fixBAMHeader.sh). The table of new and old sample names required by the `fixBAMHeader.sh` script was created as follows:
+
+```bash
+#   Extract old names from merged bam file
+samtools view -H murinum_0.03.bam | grep "@RG" | cut -f 2 | sed 's/ID://g' > merged_bam_sample_names.txt
+#   Reformat into correct table format to input into fixBAMHeader.sh
+#   Make sure this table has trailing new line at the end
+new_name="murinum "
+old_names=$(cat merged_bam_sample_names.txt | tr '\n' ' ')
+echo $new_name $old_names > merged_bam_rename_table.txt
+
+#   Submitted job script as job on MSI
+qsub fix_bam_header.job
+```
 
 ### GATK Indel Realignment - Bulbosum, Pubiflorum, Murinum
 
