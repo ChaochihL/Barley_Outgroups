@@ -15,12 +15,12 @@ set -o pipefail
     #   2. [bamFile_dir] is where our BAM files are located
 
 #   Dependencies
-module load samtools/1.6
+module load samtools_ML/1.3.1
 module load parallel
 
 #   Arguments provided by user
 #   list of bam files
-BAM_LIST=/home/morrellp/liux1299/scratch/outgroups/merged_bam/reheader_bam_list.txt
+BAM_LIST=/home/morrellp/liux1299/scratch/outgroups/merged_bam/merged_bam_list.txt
 #   where are our BAM files located?
 OUT_DIR=/home/morrellp/liux1299/scratch/outgroups/merged_bam
 
