@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -e
+set -u
 set -o pipefail
 
 #   This script maps barley outgroup sequences and outputs a SAM file.
