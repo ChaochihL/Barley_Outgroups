@@ -15,7 +15,7 @@ module load java
 #	Directory where finished BAM files are stored
 OUT_DIR=/home/morrellp/liux1299/scratch/outgroups/realigned
 #   File that includes full path to BAM files
-BAM_LIST=/home/morrellp/liux1299/scratch/outgroups/merged_bam/reheader_bam_list.txt
+BAM_LIST=/home/morrellp/liux1299/scratch/outgroups/merged_bam/merged_bam_list.txt
 
 #	 Build the sample list
 SAMPLE_LIST=($(cat ${BAM_LIST})) # This line modified from Tom's script
