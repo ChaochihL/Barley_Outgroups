@@ -34,6 +34,16 @@ module load bedtools/2.17.0 # Use this version because higher version produces w
 module load datamash_ML/1.1.0
 module load parallel
 
+#   Arguments provided by user
+#   List of bam files
+BAM_LIST=/home/morrellp/liux1299/Shared/Datasets/NGS/Alignments/Outgroup_Sequences/outgroup_partsRef/H_pubiflorum/coverage/pubiflorum_0.09.txt
+#   Directory our bamfiles are located
+BAM_DIR=/home/morrellp/liux1299/Shared/Datasets/NGS/Alignments/Outgroup_Sequences/outgroup_partsRef/H_pubiflorum
+#   Exome capture regions we are using to calculate coverage
+REGION_FILE=/home/morrellp/liux1299/Shared/References/Reference_Sequences/Barley/Morex/captured_50x_partsRef.bed
+#   Where do our output files go?
+OUT_DIR=/home/morrellp/liux1299/Shared/Datasets/NGS/Alignments/Outgroup_Sequences/outgroup_partsRef/H_pubiflorum/coverage
+
 #   Function to calculate coverage
 #   Concept of command lines borrowed from Li Lei (https://github.com/lilei1/Utilites/blob/master/coverage_bam_cmd.txt)
 function calcCoverage() {
@@ -58,16 +68,6 @@ function calcCoverage() {
 
 #   Export function
 export -f calcCoverage
-
-#   Arguments provided by user
-#   List of bam files
-BAM_LIST=/home/morrellp/liux1299/Shared/Datasets/NGS/Alignments/Outgroup_Sequences/outgroup_partsRef/H_pubiflorum/coverage/pubiflorum_0.09.txt
-#   Directory our bamfiles are located
-BAM_DIR=/home/morrellp/liux1299/Shared/Datasets/NGS/Alignments/Outgroup_Sequences/outgroup_partsRef/H_pubiflorum
-#   Exome capture regions we are using to calculate coverage
-REGION_FILE=/home/morrellp/liux1299/Shared/References/Reference_Sequences/Barley/Morex/captured_50x_partsRef.bed
-#   Where do our output files go?
-OUT_DIR=/home/morrellp/liux1299/Shared/Datasets/NGS/Alignments/Outgroup_Sequences/outgroup_partsRef/H_pubiflorum/coverage
 
 #   Array of sample names
 #   This code line borrowed from sequence handling (https://github.com/MorrellLAB/sequence_handling/blob/master/Handlers/Coverage_Mapping.sh)
