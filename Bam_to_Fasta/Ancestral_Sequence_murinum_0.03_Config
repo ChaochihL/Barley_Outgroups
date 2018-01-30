@@ -1,0 +1,40 @@
+#!/bin/bash
+
+set -e
+set -u
+set -o pipefail
+
+#   A simple script to hold variables for generating an ancestral fasta file
+
+#   This script does NOT utilize the Common_Config file
+
+#   Where is the ancestral BAM file?
+ANC_BAM=/home/morrellp/liux1299/scratch/outgroups/realigned/murinum_0.03_realigned.bam
+
+#   What should we call the output file?
+#       Defaults to the same name as the ancestal BAM file
+OUT_NAME=murinum_0.03
+
+#   Where should we put the output file?
+#       Defaults to the same directory as the ancestral BAM file.
+OUT_DIR=/home/morrellp/liux1299/scratch/outgroups/fasta
+
+#   Full path to the output file
+OUT=${OUT_DIR}/${OUT_NAME}
+
+#   Ancestral Sequence Parameters
+#       Listed below are the defaults, please modify for your samples
+#       Extract FASTA sequence from BAM file
+#       Possible values of DO_FASTA:
+#           0 is do not extract FASTA sequence
+#           1 is extract FASTA sequence by sampling random base at each position
+#           2 is use the most common base
+#           3 is use base with highest effective depth
+DO_FASTA=3
+#       Count allele frequencies
+#       If DO_FASTA is 2, DO_COUNTS must be 1
+#       Otherwise, DO_COUNTS can be any other legal value
+#       Possible values of DO_COUNTS:
+#           0 is do not count allele frequencies
+#           1 is count allele frequencies
+DO_COUNTS=1
