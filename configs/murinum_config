@@ -300,12 +300,12 @@ CM_QSUB="mem=22gb,nodes=1:ppn=16,walltime=24:00:00"
 #   Where is the list of finished BAM files?
 #       To generate this list, use sample_list_generator.sh
 #       located at /sequence_handling/HelperScripts/sample_list_generator.sh
-BAM_LIST=
+BAM_LIST=/home/morrellp/liux1299/scratch/outgroups/realigned/murinum_realigned_list.txt
 
 #   For exome capture, use the capture regions file (BED format)
 #   For whole-genome sequencing, leave this blank
 #   Coverage_Mapping should not be used for GBS data
-REGIONS_FILE=
+REGIONS_FILE=/home/morrellp/liux1299/Shared/References/Reference_Sequences/Barley/Morex/captured_50x_partsRef.bed
 
 ############################################
 ##########    Haplotype_Caller    ##########
