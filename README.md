@@ -110,6 +110,10 @@ Next the reheader BAM files were merged into a single BAM file using the `merge_
 
 We will proceed by realigning pubiflorum mapped with 9% divergence rate but also test pubiflorum mapped with 5%, 7%, and 8% divergence rates to report in the manuscript. We realigned bulbosum_A12 mapped with 3% divergence rate and realigned murinum with 3% divergence rate.
 
+### Coverage Summary
+
+Used `sequence_handling` to calculated coverage summary statistics for H murinum realigned bam file.
+
 ### BAM to FASTA - Bulbosum, Pubiflorum, Murinum
 
 [ANGSD-wrapper](https://github.com/mojaveazure/angsd-wrapper) was used to extract FASTA sequence from realigned BAM files. FASTA sequence was extracted using `DO_FASTA=3`, which uses the base with the highest effective depth, and `DO_COUNTS=1`, which counts allele frequencies.
