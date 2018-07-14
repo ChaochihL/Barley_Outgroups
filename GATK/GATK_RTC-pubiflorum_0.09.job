@@ -5,15 +5,21 @@
 #PBS -M liux1299@umn.edu
 #PBS -q mesabi
 
-
 #   Script written by Tom Kono available at https://github.com/MorrellLAB/Deleterious_GP/tree/master/Job_Scripts/Seq_Handling
 
-
-#	Required for Java
+#   Dependencies
 module load java
 
 #   File that includes full path to BAM files
 BAM_LIST=/home/morrellp/liux1299/scratch/outgroups/SAM_Processing/Picard/Finished/pubiflorum_0.09.txt
+#	The output targets file
+RTC_OUT=/home/morrellp/liux1299/scratch/outgroups/realigned/pubiflorum_0.09_realign.intervals
+#	The reference sequence
+REF=/home/morrellp/liux1299/Shared/References/Reference_Sequences/Barley/Morex/barley_RefSeq_v1.0/barley_pseudomolecules_parts.fa
+#   GATK .jar file
+GATK_JAR=/home/morrellp/liux1299/Shared/Software/GATK-3.6/GenomeAnalysisTK.jar
+#   Temporary directory for intermediate outputs
+TMP_DIR=/panfs/roc/scratch/liux1299/Picard_tmp
 
 #	Build the sample list
 SAMPLE_LIST=($(cat ${BAM_LIST})) # This line modified from Tom's script
@@ -23,12 +29,6 @@ for s in "${SAMPLE_LIST[@]}"
 do
 	GATK_IN+=("-I $s")
 done
-
-#	The output targets file
-RTC_OUT=/home/morrellp/liux1299/scratch/outgroups/realigned/pubiflorum_0.09_realign.intervals
-
-#	The reference sequence
-REF=/home/morrellp/liux1299/Shared/References/Reference_Sequences/Barley/Morex/barley_RefSeq_v1.0/barley_pseudomolecules_parts.fa
 
 #	JAVA OPTIONS
 #	-Xmx[amount]	:	use [amount] of memory.
@@ -53,8 +53,8 @@ REF=/home/morrellp/liux1299/Shared/References/Reference_Sequences/Barley/Morex/b
 #		Write the intervals to this file
 #		NOTE: This file must end in .list, .intervals, or .interval_list
 
-export _JAVA_OPTIONS="-Xmx127g -Djava.io.tmpdir=/panfs/roc/scratch/liux1299/Picard_tmp"
-java -jar /home/morrellp/liux1299/Shared/Software/GATK-3.6/GenomeAnalysisTK.jar\
+export _JAVA_OPTIONS="-Xmx127g -Djava.io.tmpdir=${TMP_DIR}"
+java -jar ${GATK_JAR}\
 	-T RealignerTargetCreator\
 	-nt 1\
 	-R ${REF}\

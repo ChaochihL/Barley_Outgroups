@@ -5,17 +5,20 @@
 #PBS -M liux1299@umn.edu
 #PBS -q lab
 
-
 #   Script written by Tom Kono available at https://github.com/MorrellLAB/Deleterious_GP/tree/master/Job_Scripts/Seq_Handling
 
-
-#	Required for Java
+#   Dependencies
 module load java
 
+#   User provided arguments
 #	Directory where finished BAM files are stored
 OUT_DIR=/home/morrellp/liux1299/scratch/outgroups/realigned
 #   File that includes full path to BAM files
 BAM_LIST=/home/morrellp/liux1299/scratch/outgroups/SAM_Processing/Picard/Finished/pubiflorum_0.09.txt
+#	The output targets file
+RTC_OUT=/home/morrellp/liux1299/scratch/outgroups/realigned/pubiflorum_0.09_realign.intervals
+#	The reference sequence
+REF=/home/morrellp/liux1299/Shared/References/Reference_Sequences/Barley/Morex/barley_RefSeq_v1.0/barley_pseudomolecules_parts.fa
 
 #	 Build the sample list
 SAMPLE_LIST=($(cat ${BAM_LIST})) # This line modified from Tom's script
@@ -25,12 +28,6 @@ for s in "${SAMPLE_LIST[@]}"
 do
 	GATK_IN+=("-I $s")
 done
-
-#	The output targets file
-RTC_OUT=/home/morrellp/liux1299/scratch/outgroups/realigned/pubiflorum_0.09_realign.intervals
-
-#	The reference sequence
-REF=/home/morrellp/liux1299/Shared/References/Reference_Sequences/Barley/Morex/barley_RefSeq_v1.0/barley_pseudomolecules_parts.fa
 
 #	OPTIONS
 #	-T IndelRealigner
@@ -61,7 +58,7 @@ REF=/home/morrellp/liux1299/Shared/References/Reference_Sequences/Barley/Morex/b
 #		Could be an error? Investigate.
 cd ${OUT_DIR}
 export _JAVA_OPTIONS="-Xmx191g"
-java -jar /home/morrellp/liux1299/Shared/Software/GATK-3.6/GenomeAnalysisTK.jar\
+java -jar ${GATK_JAR}\
 	-T IndelRealigner\
 	--entropyThreshold 0.10\
 	--LODThresholdForCleaning 1.0\
