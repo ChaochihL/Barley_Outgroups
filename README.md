@@ -119,3 +119,7 @@ Used `sequence_handling` to calculated coverage summary statistics for H murinum
 ### BAM to FASTA - Bulbosum, Pubiflorum, Murinum
 
 [ANGSD-wrapper](https://github.com/mojaveazure/angsd-wrapper) was used to extract FASTA sequence from realigned BAM files. Config files used for this step are located in the `Bam_to_Fasta` directory. Scripts used to run ANGSD-wrapper commands as a job are also in the same directory. FASTA sequence was extracted using `DO_FASTA=3`, which uses the base with the highest effective depth, and `DO_COUNTS=1`, which counts allele frequencies.
+
+### Ancestral state inference
+
+Used `angsd_anc_inf.job` script to infer ancestral state with ANGSD.
