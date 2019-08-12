@@ -1,0 +1,6 @@
+ftp://ftp.sra.ebi.ac.uk/vol1/err/ERR271/ERR271731
+https://ftp-trace.ncbi.nih.gov/sra/sra-instant/reads/ByRun/sra/ERR/ERR271/ERR271732/ERR271732.sra
+ftp://ftp.sra.ebi.ac.uk/vol1/err/ERR271/ERR271733
+https://ftp-trace.ncbi.nih.gov/sra/sra-instant/reads/ByRun/sra/ERR/ERR271/ERR271734/ERR271734.sra
+ftp://ftp.sra.ebi.ac.uk/vol1/err/ERR271/ERR271811
+https://ftp-trace.ncbi.nih.gov/sra/sra-instant/reads/ByRun/sra/SRR/SRR795/SRR7956029/SRR7956029.sra
