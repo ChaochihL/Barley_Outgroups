@@ -11,7 +11,7 @@ set -o pipefail
 module load parallel/20190122
 
 # User provided input arguments
-FTP_LIST=/panfs/roc/groups/9/morrellp/liux1299/GitHub/Barley_Outgroups/sra_ftp_links.txt
+FTP_LIST=/panfs/roc/groups/9/morrellp/liux1299/GitHub/Barley_Outgroups/00_data_preparation/sra_ftp_links.txt
 OUT_DIR=/scratch.global/liux1299/sra_outgroups
 
 # Check if out dir exists, if not make it
