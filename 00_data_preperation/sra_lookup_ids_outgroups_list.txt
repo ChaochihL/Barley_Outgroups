@@ -1,0 +1,6 @@
+ERR271731	pubiflorum_BCC2028
+ERR271732	bulbosum01
+ERR271733	bulbosum02
+ERR271734	bulbosum_A12
+ERR271811	bulbosum_wgs
+SRR7956029	murinum_BCC2017
