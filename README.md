@@ -13,7 +13,7 @@ H. murinum sample was sequenced by Dan Koenig from UC Riverside and was download
 | ERR271733 | BEC_H. Bulbosum ??                   | bulbosum02            | WXS |
 | ERR271734 | BEC_H. Bulbosum A12                  | bulbosum_A12          | WXS |
 | ERR271811 | WGS_H. bulbosum1                     | bulbosum_wgs          | WGS |
-| SRR7956029 | AG_1a_S1_R1_001                     | murinum_BCC2017       | WGS |
+| SRR7956029 | Hordeum murinum subsp. glaucum BCC2017 | murinum_BCC2017       | WGS |
 
 ## Step 00: Downloading samples and data preparation
 
@@ -29,6 +29,42 @@ The `sra_download.sh` script outputs SRA files that then need to be split into f
 
 ```bash
 qsub sra_to_fastq.sh
+```
+
+Now, let's rename the downloaded FASTQ files to more meaningful names.
+
+```bash
+# Before renaming in directory containing fastq files
+ls
+ERR271731_1.fastq.gz  ERR271732_1.fastq.gz  ERR271733_1.fastq.gz  ERR271734_1.fastq.gz  ERR271811_1.fastq.gz  SRR7956029_1.fastq.gz
+ERR271731_2.fastq.gz  ERR271732_2.fastq.gz  ERR271733_2.fastq.gz  ERR271734_2.fastq.gz  ERR271811_2.fastq.gz  SRR7956029_2.fastq.gz
+
+# In dir: ~/GitHub/Barley_Outgroups/00_data_preperation
+# Dry-run of renaming as a check before the actual renaming
+./rename_sra_fastq.py sra_lookup_ids_outgroups_list.txt /scratch.global/liux1299/sra_outgroups/fastq --dry-run
+Dry-run, print old name and new name. Please run with --rename option to do the actual renaming.
+Old_Name	 New_Name
+ERR271731_1.fastq.gz pubiflorum_BCC2028_1.fastq.gz
+ERR271731_2.fastq.gz pubiflorum_BCC2028_2.fastq.gz
+ERR271732_1.fastq.gz bulbosum01_1.fastq.gz
+ERR271732_2.fastq.gz bulbosum01_2.fastq.gz
+ERR271733_1.fastq.gz bulbosum02_1.fastq.gz
+ERR271733_2.fastq.gz bulbosum02_2.fastq.gz
+ERR271734_1.fastq.gz bulbosum_A12_1.fastq.gz
+ERR271734_2.fastq.gz bulbosum_A12_2.fastq.gz
+ERR271811_1.fastq.gz bulbosum_wgs_1.fastq.gz
+ERR271811_2.fastq.gz bulbosum_wgs_2.fastq.gz
+SRR7956029_1.fastq.gz murinum_BCC2017_1.fastq.gz
+SRR7956029_2.fastq.gz murinum_BCC2017_2.fastq.gz
+
+# Do the actual renaming
+./rename_sra_fastq.py sra_lookup_ids_outgroups_list.txt /scratch.global/liux1299/sra_outgroups/fastq --rename
+Renaming files...
+
+# After renaming in directory containing fastq files
+ls
+bulbosum01_1.fastq.gz  bulbosum02_1.fastq.gz  bulbosum_A12_1.fastq.gz  bulbosum_wgs_1.fastq.gz  murinum_BCC2017_1.fastq.gz  pubiflorum_BCC2028_1.fastq.gz
+bulbosum01_2.fastq.gz  bulbosum02_2.fastq.gz  bulbosum_A12_2.fastq.gz  bulbosum_wgs_2.fastq.gz  murinum_BCC2017_2.fastq.gz  pubiflorum_BCC2028_2.fastq.gz
 ```
 
 ## Where are the output files located?
