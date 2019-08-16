@@ -31,7 +31,7 @@ SEQ_PLATFORM=ILLUMINA
 
 #   What reference genome are we using?
 #       Include the full physical file path.
-REF_GEN=
+REF_GEN=/panfs/roc/groups/9/morrellp/shared/References/Reference_Sequences/Barley/Morex_v2/Barley_Morex_V2_pseudomolecules_parts.fasta
 
 #   Is this organism barley?
 #       Choose from: "true" or "false"
@@ -100,19 +100,19 @@ TARGET="NA"
 
 #   What are our QSub settings for Adapter_Trimming?
 #       Below are the recommended settings
-AT_QSUB="mem=1gb,nodes=1:ppn=4,walltime=10:00:00"
+AT_QSUB="mem=1gb,nodes=1:ppn=8,walltime=10:00:00"
 
 #   Where is the list of original FastQ files?
 #       Include the full file path.
-RAW_SAMPLES=
+RAW_SAMPLES=/scratch.global/liux1299/sra_outgroups/fastq/barley_outgroups_fastq_list.txt
 
 #   What shared suffix do the forward samples have?
 #       Example: _1_sequence.txt.gz
-FORWARD_NAMING=_R1.fastq.gz
+FORWARD_NAMING=_1.fastq.gz
 
 #   What shared suffix do the reverse samples have?
 #       Example: _2_sequence.txt.gz
-REVERSE_NAMING=_R2.fastq.gz
+REVERSE_NAMING=_2.fastq.gz
 
 #   If you have single-end samples, leave
 #       FORWARD_NAMING and REVERSE_NAMING
@@ -120,7 +120,7 @@ REVERSE_NAMING=_R2.fastq.gz
 #       match your samples
 
 #	  Where is the adapter file? Include the full physical file path.
-ADAPTERS=
+ADAPTERS=/panfs/roc/groups/9/morrellp/shared/References/Adapters/MascherAdapters.fasta
 
 #   What is Scythe's prior contamination rate?
 #       Scythe's documentation suggests starting at
