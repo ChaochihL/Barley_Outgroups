@@ -67,6 +67,19 @@ bulbosum01_1.fastq.gz  bulbosum02_1.fastq.gz  bulbosum_A12_1.fastq.gz  bulbosum_
 bulbosum01_2.fastq.gz  bulbosum02_2.fastq.gz  bulbosum_A12_2.fastq.gz  bulbosum_wgs_2.fastq.gz  murinum_BCC2017_2.fastq.gz  pubiflorum_BCC2028_2.fastq.gz
 ```
 
+**Quality Assessment and Adapter Trimming:**
+
+Before we start aligning the outgroup sequences, we will perform some quality control and adapter trimming to remove non-biological sequence. We will be using [`sequence_handling`](https://github.com/MorrellLAB/sequence_handling) for these steps with the config file located in the directory `00_data_preparation`.
+
+```bash
+# In dir: ~/sequence_handling
+# Quality Assessment on raw samples
+./sequence_handling Quality_Assessment /home/morrellp/liux1299/GitHub/Barley_Outgroups/00_data_preperation/outgroups_config
+
+# Adapter Trimming
+./sequence_handling Adapter_Trimming /panfs/roc/groups/9/morrellp/liux1299/GitHub/Barley_Outgroups/00_data_preperation/outgroups_config
+```
+
 ## Where are the output files located?
 
 Filepaths last updated: October 11, 2017
