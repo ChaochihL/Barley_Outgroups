@@ -78,6 +78,9 @@ Before we start aligning the outgroup sequences, we will perform some quality co
 
 # Adapter Trimming
 ./sequence_handling Adapter_Trimming /panfs/roc/groups/9/morrellp/liux1299/GitHub/Barley_Outgroups/00_data_preperation/outgroups_config
+
+# Quality Assessment on trimmed samples
+./sequence_handling Quality_Assessment /panfs/roc/groups/9/morrellp/liux1299/GitHub/Barley_Outgroups/00_data_preperation/outgroups_config
 ```
 
 ## Where are the output files located?
