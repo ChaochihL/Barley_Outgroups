@@ -87,7 +87,9 @@ QA_QSUB="mem=22gb,nodes=1:ppn=8,walltime=24:00:00"
 #   Provide a list of FastQ, SAM, or BAM files to be used
 #       Include the full file path.
 # Raw samples downloaded from NCBI SRA
-QA_SAMPLES=/scratch.global/liux1299/sra_outgroups/fastq/barley_outgroups_fastq_list.txt
+#QA_SAMPLES=/scratch.global/liux1299/sra_outgroups/fastq/barley_outgroups_fastq_list.txt
+# Trimmed samples
+QA_SAMPLES=/panfs/roc/groups/9/morrellp/shared/Datasets/Alignments/barley_outgroups/Adapter_Trimming/outgroups_trimmed_list.txt
 
 #   What is the size of the genome in basepairs (for whole-genome sequencing)
 #   or capture region (for exome capture)?
