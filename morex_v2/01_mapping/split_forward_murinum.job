@@ -1,0 +1,31 @@
+#!/bin/bash
+#PBS -l mem=22gb,nodes=1:ppn=8,walltime=24:00:00
+#PBS -m abe
+#PBS -M liux1299@umn.edu
+#PBS -q lab
+
+set -e
+set -o pipefail
+
+WORK_DIR=/home/morrellp/liux1299/Alignments/barley_outgroups/Adapter_Trimming/murinum_split
+FILE_TO_SPLIT=/panfs/roc/groups/9/morrellp/shared/Datasets/Alignments/barley_outgroups/Adapter_Trimming/murinum_BCC2017_Forward_ScytheTrimmed.fastq.gz
+PREFIX=murinum_BCC2017_Forward_ScytheTrimmed_part
+
+#	Check if working directory exists, if not make it
+mkdir -p "${WORK_DIR}"
+#	Go into working directory since split outputs files in current working directory
+cd "${WORK_DIR}"
+
+#	Split fastq file
+#	-d uses numerical suffix
+#	-a2 uses 2 digits for suffix
+#	-l is the number of lines to split on
+zcat "${FILE_TO_SPLIT}" | split -d -a2 -l 92813872 - "${PREFIX}"
+
+#	Add .fastq suffix to all output files
+for file in "${WORK_DIR}"/"${PREFIX}"*
+do
+	mv "$file" "$file.fastq"
+	gzip "$file.fastq"
+done
+
