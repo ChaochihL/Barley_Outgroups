@@ -178,7 +178,8 @@ RM_QSUB="mem=60gb,nodes=1:ppn=16,walltime=36:00:00"
 
 #   Where is our list of trimmed samples?
 #       Include the full file path.
-TRIMMED_LIST=/panfs/roc/groups/9/morrellp/shared/Datasets/Alignments/barley_outgroups/Adapter_Trimming/murinum_150bp_trimmed_list.txt
+# Let's to a test mapping with only one of the 16 parts first to see alignment stats
+TRIMMED_LIST=/panfs/roc/groups/9/morrellp/shared/Datasets/Alignments/barley_outgroups/Adapter_Trimming/murinum_split/test_murinum_part00_list.txt
 
 #   How are trimmed forward samples named?
 #       If using the Adapter_Trimming handler
