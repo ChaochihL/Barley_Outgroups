@@ -83,6 +83,43 @@ Before we start aligning the outgroup sequences, we will perform some quality co
 ./sequence_handling Quality_Assessment /panfs/roc/groups/9/morrellp/liux1299/GitHub/Barley_Outgroups/00_data_preperation/outgroups_config
 ```
 
+## Step 01: Aligning outgroup sequences
+
+| Dependencies | Version |
+| ------------ | ------- |
+| Stampy | 1.0.32 |
+
+Since H murinum sample was too large to process, we split the trimmed FASTQ file for both forward and reverse reads prior to mapping with stampy.
+
+```bash
+# In dir: ~/GitHub/Barley_Outgroups/morex_v2/01_mapping
+qsub split_forward_murinum.job
+qsub split_reverse_murinum.job
+```
+
+Murinum was split into 16 parts. Next, we need to prepare the reference for stampy by building a genome (`.stidx`) file.
+
+```bash
+# In dir: ~/GitHub/Barley_Outgroups/morex_v2/01_mapping
+qsub stampy_build_genome.sh
+```
+
+We will proceed by aligning with stampy v1.0.32 and use the following commands to submit scripts as job arrays:
+
+```bash
+#   Map with 3% divergence
+#   What is the maximum number of Torque tasks (# in array)
+#   Note: array is 0 indexed
+SINGLE_ARRAY_LIMIT=15
+echo "source /home/morrellp/liux1299/GitHub/Barley_Outgroups/morex_v2/01_mapping/stampy_mapped/stampy-murinum-0.03.sh && /home/morrellp/liux1299/GitHub/Barley_Outgroups/morex_v2/01_mapping/stampy_mapped/stampy-murinum-0.03.sh" | qsub -t 0-"${SINGLE_ARRAY_LIMIT}" -q mesabi -l mem=60gb,nodes=1:ppn=24,walltime=72:00:00 -m abe -M liux1299@umn.edu
+
+#   Map with 9% divergence
+#   What is the maximum number of Torque tasks (# in array)
+#   Note: array is 0 indexed
+SINGLE_ARRAY_LIMIT=15
+echo "source /home/morrellp/liux1299/GitHub/Barley_Outgroups/morex_v2/01_mapping/stampy_mapped/stampy-murinum-0.09.sh && /home/morrellp/liux1299/GitHub/Barley_Outgroups/morex_v2/01_mapping/stampy_mapped/stampy-murinum-0.09.sh" | qsub -t 0-"${SINGLE_ARRAY_LIMIT}" -q mesabi -l mem=62gb,nodes=1:ppn=24,walltime=72:00:00 -m abe -M liux1299@umn.edu
+```
+
 ## Where are the output files located?
 
 Filepaths last updated: October 11, 2017
