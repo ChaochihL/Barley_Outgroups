@@ -58,7 +58,7 @@ function stampy_map() {
     #       -f is the output file format
     #       -M reads to map
     #       -o is our output file
-    stampy -g "${ref_prefix}" \
+    stampy.py -g "${ref_prefix}" \
            -h "${ref_prefix}" \
            --substitutionrate="${divergence}" \
            -t "${n_threads}" \

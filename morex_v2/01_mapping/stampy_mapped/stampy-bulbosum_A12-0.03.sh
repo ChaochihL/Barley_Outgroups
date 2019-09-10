@@ -36,7 +36,7 @@ SAMPLE_NAME=bulbosum_A12
 #       -M reads to map
 #       -o is our output file
 cd ${REF_DIR}
-stampy -g "${REF_PREFIX}" \
+stampy.py -g "${REF_PREFIX}" \
        -h "${REF_PREFIX}" \
        --substitutionrate="${DIVERGENCE}" \
        -f sam \
