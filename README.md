@@ -107,6 +107,7 @@ qsub stampy_build_genome.sh
 We will proceed by aligning with stampy v1.0.32 and use the following commands to submit scripts as job arrays:
 
 ```bash
+#   Murinum
 #   Map with 3% divergence
 #   What is the maximum number of Torque tasks (# in array)
 #   Note: array is 0 indexed
@@ -118,6 +119,15 @@ echo "source /home/morrellp/liux1299/GitHub/Barley_Outgroups/morex_v2/01_mapping
 #   Note: array is 0 indexed
 SINGLE_ARRAY_LIMIT=15
 echo "source /home/morrellp/liux1299/GitHub/Barley_Outgroups/morex_v2/01_mapping/stampy_mapped/stampy-murinum-0.09.sh && /home/morrellp/liux1299/GitHub/Barley_Outgroups/morex_v2/01_mapping/stampy_mapped/stampy-murinum-0.09.sh" | qsub -t 0-"${SINGLE_ARRAY_LIMIT}" -q mesabi -l mem=62gb,nodes=1:ppn=24,walltime=72:00:00 -m abe -M liux1299@umn.edu
+
+#   Pubiflorum
+qsub stampy-pubiflorum-0.05.sh
+qsub stampy-pubiflorum-0.09.sh
+qsub stampy-pubiflorum-0.11.sh
+
+#   Bulbosum A12
+qsub stampy-bulbosum_A12-0.03.sh
+qsub stampy-bulbosum_A12-0.05.sh
 ```
 
 ## Where are the output files located?
