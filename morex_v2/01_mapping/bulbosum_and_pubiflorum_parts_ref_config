@@ -174,11 +174,13 @@ QT_THRESHOLD=
 #   What are our QSub settings for Read_Mapping?
 #       Below are the recommended settings
 #       For large files, it may be necessary to use mesabi
-RM_QSUB="mem=60gb,nodes=1:ppn=16,walltime=24:00:00"
+RM_QSUB="mem=60gb,nodes=1:ppn=12,walltime=42:00:00"
 
 #   Where is our list of trimmed samples?
 #       Include the full file path.
-TRIMMED_LIST=/panfs/roc/groups/9/morrellp/shared/Datasets/Alignments/barley_outgroups/Adapter_Trimming/bulbosum_pubiflorum_100bp_trimmed_list.txt
+#TRIMMED_LIST=/panfs/roc/groups/9/morrellp/shared/Datasets/Alignments/barley_outgroups/Adapter_Trimming/bulbosum_pubiflorum_100bp_trimmed_list.txt
+# Re-run failed samples.
+TRIMMED_LIST=/panfs/roc/groups/9/morrellp/shared/Datasets/Alignments/barley_outgroups/Adapter_Trimming/bulbosum_pubiflorum_100bp_trimmed_list_re-run.txt
 
 #   How are trimmed forward samples named?
 #       If using the Adapter_Trimming handler
