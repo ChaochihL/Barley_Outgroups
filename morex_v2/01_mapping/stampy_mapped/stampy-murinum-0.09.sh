@@ -15,17 +15,17 @@ module load stampy_ML/1.0.32
 #   Note this has to match number of threads requested
 N_THREADS=24
 #   Reference prefix must match .stidx files
-REF_PREFIX='Barley_Morex_V2_pseudomolecules_parts'
+REF_PREFIX=Barley_Morex_V2_pseudomolecules_parts
 #   What directory contains our reference files?
-REF_DIR='/home/morrellp/liux1299/Shared/References/Reference_Sequences/Barley/Morex_v2/stampy_files'
+REF_DIR=/home/morrellp/liux1299/Shared/References/Reference_Sequences/Barley/Morex_v2/stampy_files
 #   What is our per site substitution rate?
 DIVERGENCE='0.09'
 #   Where do our output files go?
-OUT_DIR='/scratch.global/liux1299/barley_outgroups/stampy_mapped'
+OUT_DIR=/scratch.global/liux1299/barley_outgroups/stampy_mapped
 #   What is our forward read?
-FORWARD_LIST='/panfs/roc/groups/9/morrellp/shared/Datasets/Alignments/barley_outgroups/Adapter_Trimming/murinum_split/murinum_forward_parts_list.txt'
+FORWARD_LIST=/panfs/roc/groups/9/morrellp/shared/Datasets/Alignments/barley_outgroups/Adapter_Trimming/murinum_split/murinum_forward_parts_list.txt
 #   What is our reverse read?
-REVERSE_LIST='/panfs/roc/groups/9/morrellp/shared/Datasets/Alignments/barley_outgroups/Adapter_Trimming/murinum_split/murinum_reverse_parts_list.txt'
+REVERSE_LIST=/panfs/roc/groups/9/morrellp/shared/Datasets/Alignments/barley_outgroups/Adapter_Trimming/murinum_split/murinum_reverse_parts_list.txt
 
 function stampy_map() {
     local fwd_list="$1" # forward reads sample list
@@ -44,7 +44,7 @@ function stampy_map() {
     #   What is the sample name without the suffix and forward/reverse indicators?
     #   Note: naming scheme is specific to this set of samples
     #   i.e. murinum_Forward_ScytheTrimmed_part00.fastq.gz
-    local sample_name=$(basename ${sample_fwd} .fastq.gz | cut -d '_' -f 1,4)
+    local sample_name=$(basename ${sample_fwd} .fastq.gz | cut -d '_' -f 1,2,5)
 
     #   Make sure out directory exists
     mkdir -p "${out_dir}"
