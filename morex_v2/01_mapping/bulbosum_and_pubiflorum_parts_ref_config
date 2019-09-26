@@ -6,8 +6,8 @@
 
 #   Where are we storing the output files?
 #       Final directory is ${OUT_DIR}/Name_of_Handler
-#OUT_DIR=/panfs/roc/groups/9/morrellp/shared/Datasets/Alignments/barley_outgroups
-OUT_DIR=/scratch.global/liux1299/barley_outgroups/bulbosum_pubiflorum
+OUT_DIR=/panfs/roc/groups/9/morrellp/shared/Datasets/Alignments/barley_outgroups
+#OUT_DIR=/scratch.global/liux1299/barley_outgroups/bulbosum_pubiflorum
 
 #   Name this project
 PROJECT=bulbosum_pubiflorum
@@ -50,32 +50,6 @@ USE_PBS=true
 #       Change to true if you get errors from GATK like:
 #       "<Sample> appears to be using the wrong encoding for quality scores: we encountered an extremely high quality score"
 FIX_QUALITY_SCORES=false
-
-############################################
-##########     GBS_Demultiplex    ##########
-############################################
-
-#   What are our QS
-GD_QSUB="mem=1gb,nodes=1:ppn=4,walltime=6:00:00"
-
-GBS_SAMPLES=
-
-#   A key file with the following columns:
-#       Flowcell Lane Barcode Sample PlateName Row Column
-KEY_FILE=
-
-#   Are the barcodes at the beginning or the end of the sequence?
-#       Choose from: 'beginning' or 'end'
-LINE_ENDING=
-
-#   How many mismatches are allowed?
-MISMATCH_TOL=1
-
-#   Do we allow partial overlap?
-PARTIAL=0
-
-#   What extension or naming convention do the samples have?
-FILE_TYPE=
 
 ############################################
 ##########   Quality_Assessment   ##########
@@ -127,45 +101,6 @@ ADAPTERS=
 #       Scythe's documentation suggests starting at
 #       0.05 and then experimenting as needed
 PRIOR=0.05
-
-############################################
-##########    Quality_Trimming    ##########
-############################################
-
-#   What are our QSub settings for Quality_Trimming?
-#       Below are the recommended settings
-QT_QSUB="mem=1gb,nodes=1:ppn=4,walltime=10:00:00"
-
-#   Where is our list of trimmed samples? Include the full file path.
-ADAPTED_LIST=${OUT_DIR}/Adapter_Trimming/${PROJECT}_trimmed_adapters.txt
-
-#   What shared suffix do the trimmed forward samples have?
-#       If using the Adapter_Trimming handler,
-#       leave the following definition as is
-FORWARD_ADAPTED=_Forward_ScytheTrimmed.fastq.gz
-
-#   What shared suffix do the trimmed reverse samples have?
-#       If using the Adapter_Trimming handler,
-#       leave the following definition as is
-REVERSE_ADAPTED=_Reverse_ScytheTrimmed.fastq.gz
-
-#   What shared suffix do the trimmed single samples have?
-#       If using the Adapter_Trimming handler,
-#       leave the following definition as is
-SINGLES_ADAPTED=_Single_ScytheTrimmed.fastq.gz
-
-#   If you have single-end samples, leave
-#       FORWARD_ADAPTED and REVERSE_ADAPTED
-#       filled with values that do NOT
-#       match your samples
-
-#   If you have paired-end samples, leave
-#       SINGLES_ADAPTED filled with values that
-#       do NOT match your samples
-
-#   What is the threshold for trimming?
-#       For standard trimming, use 20
-QT_THRESHOLD=
 
 ############################################
 ##########  	Read_Mapping	  ##########
@@ -274,12 +209,12 @@ VERBOSITY='all'
 
 #   What are our QSub settings for SAM_Processing?
 #       Below are the recommended settings
-SP_QSUB="mem=22gb,nodes=1:ppn=16,walltime=24:00:00"
+SP_QSUB="mem=22gb,nodes=1:ppn=16,walltime=10:00:00"
 
 #   Specify how you would like your SAM files to be processed
 #       Choose from:
 #           'picard' (recommended) or 'samtools'
-METHOD=
+METHOD=picard
 
 #   Number of threads used for SAM_Processing
 #   Using more threads requires more memory
@@ -289,7 +224,8 @@ SAM_PROCESSING_THREADS=
 #   Where is the list of read-mapped samples?
 #       To generate this list, use sample_list_generator.sh
 #       located at /sequence_handling/HelperScripts/sample_list_generator.sh
-MAPPED_LIST=
+#   Mapped using Stampy
+MAPPED_LIST=/scratch.global/liux1299/barley_outgroups/stampy_mapped/sam_list_bulbosum_and_pubiflorum.txt
 
 #   The next two variables are only used if processing with Picard
 #       If using SAMtools, leave these variables blank
@@ -304,7 +240,7 @@ MAX_FILES=1000
 #       If you've encountered issues with running out of temp space
 #           with picard, you can optionally specify a temp directory
 #       Otherwise, leave blank
-TMP=
+TMP=/scratch.global/liux1299/barley_outgroups
 
 ############################################
 ##########    Coverage_Mapping    ##########
