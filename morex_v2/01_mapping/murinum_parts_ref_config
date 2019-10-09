@@ -6,8 +6,7 @@
 
 #   Where are we storing the output files?
 #       Final directory is ${OUT_DIR}/Name_of_Handler
-#OUT_DIR=/panfs/roc/groups/9/morrellp/shared/Datasets/Alignments/barley_outgroups
-OUT_DIR=/scratch.global/liux1299/barley_outgroups/murinum/test_part00
+OUT_DIR=/panfs/roc/groups/9/morrellp/shared/Datasets/Alignments/barley_outgroups
 
 #   Name this project
 PROJECT=murinum
@@ -273,12 +272,12 @@ VERBOSITY='all'
 
 #   What are our QSub settings for SAM_Processing?
 #       Below are the recommended settings
-SP_QSUB="mem=22gb,nodes=1:ppn=16,walltime=24:00:00"
+SP_QSUB="mem=32gb,nodes=1:ppn=16,walltime=12:00:00"
 
 #   Specify how you would like your SAM files to be processed
 #       Choose from:
 #           'picard' (recommended) or 'samtools'
-METHOD=
+METHOD='picard'
 
 #   Number of threads used for SAM_Processing
 #   Using more threads requires more memory
@@ -288,7 +287,7 @@ SAM_PROCESSING_THREADS=
 #   Where is the list of read-mapped samples?
 #       To generate this list, use sample_list_generator.sh
 #       located at /sequence_handling/HelperScripts/sample_list_generator.sh
-MAPPED_LIST=
+MAPPED_LIST=/scratch.global/liux1299/barley_outgroups/stampy_mapped/sam_list_murinum_parts.txt
 
 #   The next two variables are only used if processing with Picard
 #       If using SAMtools, leave these variables blank
@@ -303,7 +302,7 @@ MAX_FILES=1000
 #       If you've encountered issues with running out of temp space
 #           with picard, you can optionally specify a temp directory
 #       Otherwise, leave blank
-TMP=
+TMP=/scratch.global/liux1299/barley_outgroups
 
 ############################################
 ##########    Coverage_Mapping    ##########
