@@ -287,7 +287,9 @@ SAM_PROCESSING_THREADS=
 #   Where is the list of read-mapped samples?
 #       To generate this list, use sample_list_generator.sh
 #       located at /sequence_handling/HelperScripts/sample_list_generator.sh
-MAPPED_LIST=/scratch.global/liux1299/barley_outgroups/stampy_mapped/sam_list_murinum_parts.txt
+#MAPPED_LIST=/scratch.global/liux1299/barley_outgroups/stampy_mapped/sam_list_murinum_parts.txt
+# Re-run failed samples
+MAPPED_LIST=/scratch.global/liux1299/barley_outgroups/stampy_mapped/sam_list_murinum_parts_re-run.txt
 
 #   The next two variables are only used if processing with Picard
 #       If using SAMtools, leave these variables blank
