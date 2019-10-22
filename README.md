@@ -108,17 +108,18 @@ We will proceed by aligning with stampy v1.0.32 and use the following commands t
 
 ```bash
 #   Murinum
+#   In dir: /home/morrellp/liux1299/GitHub/Barley_Outgroups/morex_v2/01_mapping/stampy_mapped
 #   Map with 3% divergence
 #   What is the maximum number of Torque tasks (# in array)
 #   Note: array is 0 indexed
 SINGLE_ARRAY_LIMIT=15
-echo "source /home/morrellp/liux1299/GitHub/Barley_Outgroups/morex_v2/01_mapping/stampy_mapped/stampy-murinum-0.03.sh && /home/morrellp/liux1299/GitHub/Barley_Outgroups/morex_v2/01_mapping/stampy_mapped/stampy-murinum-0.03.sh" | qsub -t 0-"${SINGLE_ARRAY_LIMIT}" -q mesabi -l mem=60gb,nodes=1:ppn=24,walltime=72:00:00 -m abe -M liux1299@umn.edu
+qsub -t 0-"${SINGLE_ARRAY_LIMIT}" stampy-murinum-0.03.sh
 
 #   Map with 9% divergence
 #   What is the maximum number of Torque tasks (# in array)
 #   Note: array is 0 indexed
 SINGLE_ARRAY_LIMIT=15
-echo "source /home/morrellp/liux1299/GitHub/Barley_Outgroups/morex_v2/01_mapping/stampy_mapped/stampy-murinum-0.09.sh && /home/morrellp/liux1299/GitHub/Barley_Outgroups/morex_v2/01_mapping/stampy_mapped/stampy-murinum-0.09.sh" | qsub -t 0-"${SINGLE_ARRAY_LIMIT}" -q mesabi -l mem=62gb,nodes=1:ppn=24,walltime=72:00:00 -m abe -M liux1299@umn.edu
+qsub -t 0-"${SINGLE_ARRAY_LIMIT}" stampy-murinum-0.09.sh
 
 #   Pubiflorum
 qsub stampy-pubiflorum-0.05.sh
@@ -129,6 +130,22 @@ qsub stampy-pubiflorum-0.11.sh
 qsub stampy-bulbosum_A12-0.03.sh
 qsub stampy-bulbosum_A12-0.05.sh
 ```
+
+#### SAM Processing
+
+Using `sequence_handling` we will convert the mapped samples to BAM, mark duplicates, and sort BAM.
+
+```bash
+# Murinum
+
+# Bulbosum A12 and Pubiflorum
+./sequence_handling SAM_Processing /panfs/roc/groups/9/morrellp/liux1299/GitHub/Barley_Outgroups/morex_v2/01_mapping/bulbosum_and_pubiflorum_parts_ref_config
+
+# Murinum split into parts
+./sequence_handling SAM_Processing /panfs/roc/groups/9/morrellp/liux1299/GitHub/Barley_Outgroups/morex_v2/01_mapping/murinum_parts_ref_config
+```
+
+---
 
 ## Where are the output files located?
 

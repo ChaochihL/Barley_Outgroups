@@ -1,4 +1,8 @@
 #!/bin/bash
+#PBS -l mem=16gb,nodes=1:ppn=1,walltime=30:00:00
+#PBS -m abe
+#PBS -M liux1299@umn.edu
+#PBS -q mesabi
 
 set -e
 set -u
@@ -28,24 +32,17 @@ FORWARD_LIST=/panfs/roc/groups/9/morrellp/shared/Datasets/Alignments/barley_outg
 REVERSE_LIST=/panfs/roc/groups/9/morrellp/shared/Datasets/Alignments/barley_outgroups/Adapter_Trimming/murinum_split/murinum_reverse_parts_list.txt
 
 function stampy_map() {
-    local fwd_list="$1" # forward reads sample list
-    local rev_list="$2" # reverse reads sample list
+    local fwd_read="$1" # forward reads sample list
+    local rev_read="$2" # reverse reads sample list
     local n_threads="$3" # what is the number of threads requested?
     local ref_prefix="$4" # what is the prefix of our reference?
     local ref_dir="$5" # what is the directory of our reference?
     local divergence="$6" # what is our per site substitution rate?
     local out_dir="$7" # what is our output directory?
-    #   Convert sample list into an array
-    declare -a fwd_array=($(grep -E ".fastq.gz" "${fwd_list}")) # forward reads
-    declare -a rev_array=($(grep -E ".fastq.gz" "${rev_list}")) # reverse reads
-    #   Which sample are we currently working on?
-    local sample_fwd="${fwd_array[${PBS_ARRAYID}]}" # forward samples
-    local sample_rev="${rev_array[${PBS_ARRAYID}]}" # reverse samples
     #   What is the sample name without the suffix and forward/reverse indicators?
     #   Note: naming scheme is specific to this set of samples
     #   i.e. murinum_Forward_ScytheTrimmed_part00.fastq.gz
-    #   After it should look like: murinum_BCC2017_part00
-    local sample_name=$(basename ${sample_fwd} .fastq.gz | cut -d '_' -f 1,2,5)
+    local sample_name=$(basename ${fwd_read} .fastq.gz | cut -d '_' -f 1,2,5)
 
     #   Make sure out directory exists
     mkdir -p "${out_dir}"
@@ -72,8 +69,8 @@ function stampy_map() {
 export -f stampy_map
 
 #   Create an array of fastq.gz files used for job array
-FWD_ARRAY=($(grep -E ".fastq.gz" "${FORWARD_LIST}")) # forward reads
-REV_ARRAY=($(grep -E ".fastq.gz" "${REVERSE_LIST}")) # reverse reads
+FWD_SAMPLE=$(grep -E ".fastq.gz" "${FORWARD_LIST}" | sed "${PBS_ARRAYID}q;d") # forward reads
+REV_SAMPLE=$(grep -E ".fastq.gz" "${REVERSE_LIST}" | sed "${PBS_ARRAYID}q;d") # reverse reads
 
 #   Run stampy on all parts
-stampy_map "${FORWARD_LIST}" "${REVERSE_LIST}" "${N_THREADS}" "${REF_PREFIX}" "${REF_DIR}" "${DIVERGENCE}" "${OUT_DIR}"
+stampy_map "${FWD_SAMPLE}" "${REV_SAMPLE}" "${N_THREADS}" "${REF_PREFIX}" "${REF_DIR}" "${DIVERGENCE}" "${OUT_DIR}"
