@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+#PBS -l mem=22gb,nodes=1:ppn=16,walltime=24:00:00
+#PBS -m abe
+#PBS -M liux1299@umn.edu
+#PBS -q mesabi
+
+set -e
+set -o pipefail
+
+#   Dependencies
+module load parallel/20190122
+module load samtools/1.9
+
+#   User provided arguments
+FIX_BAM_HEADER_SCRIPT=/home/morrellp/liux1299/GitHub/Barley_Outgroups/morex_v2/01_mapping/fixBAMHeader.sh
+TABLE=/panfs/roc/groups/9/morrellp/shared/Datasets/Alignments/barley_outgroups/SAM_Processing/Picard/bam_murinum_reheader_table.txt
+PLATFORM=ILLUMINA
+SAMPLE_LIST=/panfs/roc/groups/9/morrellp/shared/Datasets/Alignments/barley_outgroups/SAM_Processing/Picard/murinum_0.03_bam_list.txt
+OUT_DIR=/panfs/roc/groups/9/morrellp/shared/Datasets/Alignments/barley_outgroups/reheader_bam
+
+# Check if out dir exists, if not make it
+mkdir -p ${OUT_DIR}
+
+#   Run program
+"${FIX_BAM_HEADER_SCRIPT}" -t "${TABLE}" \
+                           -p "${PLATFORM}" \
+                           -s "${SAMPLE_LIST}" \
+                           -o "${OUT_DIR}"
