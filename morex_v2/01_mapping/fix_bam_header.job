@@ -1,5 +1,5 @@
 #!/bin/bash
-#PBS -l mem=8gb,nodes=1:ppn=16,walltime=01:00:00
+#PBS -l mem=22gb,nodes=1:ppn=16,walltime=02:00:00
 #PBS -m abe
 #PBS -M liux1299@umn.edu
 #PBS -q mesabi
@@ -26,3 +26,20 @@ mkdir -p ${OUT_DIR}
                            -p "${PLATFORM}" \
                            -s "${SAMPLE_LIST}" \
                            -o "${OUT_DIR}"
+
+#   Function to index bam files
+function indexBAM() {
+    local bam_file="$1"
+    #   Sample name
+    #sampleName=`basename "${BAMFile}" .bam`
+    #   Create BAI index for BAM file
+    samtools index -b "${bam_file}"
+}
+
+#   Export function
+export -f indexBAM
+
+cd ${OUT_DIR}
+BAM_ARR=($(find $(pwd -P) -name "*reheader.bam" | sort))
+# Index reheader bam files
+parallel indexBAM {} "${OUT_DIR}" ::: "${BAM_ARR[@]}"
