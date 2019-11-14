@@ -30,8 +30,6 @@ mkdir -p ${OUT_DIR}
 #   Function to index bam files
 function indexBAM() {
     local bam_file="$1"
-    #   Sample name
-    #sampleName=`basename "${BAMFile}" .bam`
     #   Create BAI index for BAM file
     samtools index -b "${bam_file}"
 }
@@ -43,3 +41,6 @@ cd ${OUT_DIR}
 BAM_ARR=($(find $(pwd -P) -name "*reheader.bam" | sort))
 # Index reheader bam files
 parallel indexBAM {} "${OUT_DIR}" ::: "${BAM_ARR[@]}"
+
+# Rename index files
+rename -v ".bam.bai" ".bai" *.bam.bai
