@@ -1,5 +1,5 @@
 #!/bin/bash
-#PBS -l mem=22gb,nodes=1:ppn=16,walltime=24:00:00
+#PBS -l mem=22gb,nodes=1:ppn=16,walltime=02:00:00
 #PBS -m abe
 #PBS -M liux1299@umn.edu
 #PBS -q mesabi
@@ -45,6 +45,9 @@ angsd \
     -doCounts ${DO_COUNTS} \
     -i ${CURRENT_BAM} \
     -out ${OUT_DIR}/${SAMPLE_NAME}
+
+# Unzip the gzipped fasta file
+gzip -d "${OUT_DIR}/${SAMPLE_NAME}.fa.gz"
 
 # Index fasta file
 samtools faidx "${OUT_DIR}/${SAMPLE_NAME}.fa"
