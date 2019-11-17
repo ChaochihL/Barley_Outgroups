@@ -1,8 +1,8 @@
 #!/bin/bash
-#PBS -l mem=60gb,nodes=1:ppn=24,walltime=42:00:00
+#PBS -l mem=12gb,nodes=1:ppn=16,walltime=12:00:00
 #PBS -m abe
 #PBS -M liux1299@umn.edu
-#PBS -q ram1t
+#PBS -q mesabi
 
 set -e
 set -u
