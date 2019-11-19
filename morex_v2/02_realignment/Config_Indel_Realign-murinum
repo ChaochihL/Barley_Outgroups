@@ -70,7 +70,7 @@ RTC_BAM_LIST=/panfs/roc/groups/9/morrellp/shared/Datasets/Alignments/barley_outg
 
 #   What are our Qsub settings for Indel_Realigner?
 #       Below are the recommended settings
-IR_QSUB="mem=12gb,nodes=1:ppn=16,walltime=08:00:00"
+IR_QSUB="mem=8gb,nodes=1:ppn=16,walltime=24:00:00"
 
 #   Where is the list of finished BAM files?
 #       To generate this list, use sample_list_generator.sh
