@@ -1,8 +1,8 @@
 #!/bin/bash
-#PBS -l mem=22gb,nodes=1:ppn=16,walltime=02:00:00
+#PBS -l mem=92gb,nodes=1:ppn=16,walltime=02:00:00
 #PBS -m abe
 #PBS -M liux1299@umn.edu
-#PBS -q mesabi
+#PBS -q ram1t
 
 set -e
 set -o pipefail
