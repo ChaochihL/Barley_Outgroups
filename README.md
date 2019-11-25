@@ -145,6 +145,66 @@ Using `sequence_handling` we will convert the mapped samples to BAM, mark duplic
 ./sequence_handling SAM_Processing /panfs/roc/groups/9/morrellp/liux1299/GitHub/Barley_Outgroups/morex_v2/01_mapping/murinum_parts_ref_config
 ```
 
+#### Murinum reheader and merge bam
+
+```bash
+# Extract old names from BAM files split into parts
+for i in $(ls murinum_BCC2017*.bam)
+do
+    samtools view -H ${i} | grep "@RG" | cut -f 2 | sed -e 's/ID://g' >> old_bam_murinum_names.txt
+done
+
+#   Reformat into correct table format to input into fixBAMHeader.sh
+#   Make sure this table has trailing new line at the end
+new_name="murinum_BCC2017"
+old_names=$(cat old_bam_murinum_names.txt | tr '\n' ' ')
+echo ${new_name} ${old_names} > bam_murinum_reheader_table.txt
+
+#   Submitted job script as job on MSI
+qsub fix_bam_header.job
+```
+
+Merge murinum parts into a single BAM file:
+
+```bash
+qsub merge_bam.sh
+```
+
+## Step 02: Indel realignment
+
+H. bulbosum and H. pubiflorum:
+
+```bash
+# Bulbosum A12 and pubiflorum
+# RTC
+./sequence_handling Realigner_Target_Creator /panfs/roc/groups/9/morrellp/liux1299/GitHub/Barley_Outgroups/morex_v2/02_realignment/Config_Indel_Realign-b_and_p
+
+# Indel realignment
+./sequence_handling Indel_Realigner /panfs/roc/groups/9/morrellp/liux1299/GitHub/Barley_Outgroups/morex_v2/02_realignment/Config_Indel_Realign-b_and_p
+```
+
+H. murinum:
+
+```bash
+# RTC
+./sequence_handling Realigner_Target_Creator /panfs/roc/groups/9/morrellp/liux1299/GitHub/Barley_Outgroups/morex_v2/02_realignment/Config_Indel_Realign-murinum
+
+# Indel realignment
+./sequence_handling Indel_Realigner /panfs/roc/groups/9/morrellp/liux1299/GitHub/Barley_Outgroups/morex_v2/02_realignment/Config_Indel_Realign-murinum
+```
+
+## Step 03: Bam to fasta
+
+```bash
+# In dir: ~/GitHub/Barley_Outgroups/morex_v2/03_Bam_to_Fasta
+# Bulbosum A12 and pubiflorum
+# Submitted as PBS task array
+qsub -t 1-2 bam_to_fasta-bp.sh
+
+# Murinum
+qsub -t 1 bam_to_fasta-murinum.sh
+```
+
 ---
 
 ## Where are the output files located?
