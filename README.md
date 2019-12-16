@@ -154,11 +154,23 @@ do
     samtools view -H ${i} | grep "@RG" | cut -f 2 | sed -e 's/ID://g' >> old_bam_murinum_names.txt
 done
 
+# Look at contents
+head -n 5 old_bam_murinum_names.txt 
+murinum_BCC2017_part00_0.03
+murinum_BCC2017_part01_0.03
+murinum_BCC2017_part02_0.03
+murinum_BCC2017_part03_0.03
+murinum_BCC2017_part04_0.03
+
 #   Reformat into correct table format to input into fixBAMHeader.sh
 #   Make sure this table has trailing new line at the end
 new_name="murinum_BCC2017"
 old_names=$(cat old_bam_murinum_names.txt | tr '\n' ' ')
 echo ${new_name} ${old_names} > bam_murinum_reheader_table.txt
+
+# Look at contents
+cat bam_murinum_reheader_table.txt
+murinum_BCC2017 murinum_BCC2017_part00_0.03 murinum_BCC2017_part01_0.03 murinum_BCC2017_part02_0.03 murinum_BCC2017_part03_0.03 murinum_BCC2017_part04_0.03 murinum_BCC2017_part05_0.03 murinum_BCC2017_part06_0.03 murinum_BCC2017_part07_0.03 murinum_BCC2017_part08_0.03 murinum_BCC2017_part09_0.03 murinum_BCC2017_part10_0.03 murinum_BCC2017_part11_0.03 murinum_BCC2017_part12_0.03 murinum_BCC2017_part13_0.03 murinum_BCC2017_part14_0.03 murinum_BCC2017_part15_0.03
 
 #   Submitted job script as job on MSI
 qsub fix_bam_header.job
