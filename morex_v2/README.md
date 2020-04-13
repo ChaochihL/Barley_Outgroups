@@ -217,3 +217,7 @@ qsub -t 1-2 bam_to_fasta-bp.sh
 # Murinum
 qsub -t 1 bam_to_fasta-murinum.sh
 ```
+
+## Infer Ancestral State with ANGSD
+
+If you would like to infer the ancestral state and output a VCF file to use with downstream analyses, you can modify the script [`angsd_anc_inf.job`](https://github.com/ChaochihL/Barley_Outgroups/blob/master/morex_v1/angsd_anc_inf.job) but note that this script was used when processing data relative to Morex v1. Please make sure you modify this script accordingly and use the latest version of ANGSD.
