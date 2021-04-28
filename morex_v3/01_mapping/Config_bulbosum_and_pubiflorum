@@ -1,0 +1,294 @@
+#!/bin/bash
+
+#   More complete information on how to fill out
+#       this Config file can be found at:
+#       https://github.com/MorrellLAB/sequence_handling/wiki/Configuration
+
+###################################################
+##########     Shared across handlers    ##########
+###################################################
+
+#   Where are we storing the output files?
+#       Final directory is ${OUT_DIR}/Name_of_Handler
+OUT_DIR=/panfs/roc/groups/9/morrellp/shared/Datasets/Alignments/barley_outgroups
+
+#   Name this project
+PROJECT=bulbosum_pubiflorum
+
+#   What email should we use for job notifications?
+EMAIL=liux1299@umn.edu
+
+#   What encoding is used for quality values?
+#       Look at the FastQC files to determine the sequence encoding.
+#       Choose from: 'sanger', 'illumina', 'solexa', or 'phred'
+#           Illumina 1.8+ and Oxford Nanopore use 'sanger' encoding.
+QUAL_ENCODING=sanger
+
+#   Sequencing platform technology
+#       What platform were the reads produced?
+#       Valid options are:
+#           CAPILLARY, LS454, ILLUMINA,
+#           SOLID, HELICOS, IONTORRENT,
+#           ONT, and PACBIO
+SEQ_PLATFORM=ILLUMINA
+
+#   What reference genome are we using?
+#       Include the full physical file path.
+REF_GEN=/panfs/roc/groups/9/morrellp/shared/References/Reference_Sequences/Barley/Morex_v3/Barley_MorexV3_pseudomolecules_parts.fasta
+
+#   Is this organism barley?
+#       Choose from: "true" or "false"
+BARLEY="true"
+
+#   Are you running the analysis on the Minnesota Supercomputing Institute (MSI)?
+#       Choose from: "true" or "false"
+MSI="true"
+
+#   Are you submitting the job with qsub from PBS (Portable Batch System)
+#       Choose from: "true" or "false"
+USE_PBS=false
+
+#   Are you submitting the job with sbatch from Slurm?
+#       Choose from: "true" or "false"
+USE_SLURM=true
+
+#   Do the quality scores need to be adjusted for GATK? Default: false
+#       Change to true if you get errors from GATK like:
+#       "<Sample> appears to be using the wrong encoding for quality scores: we encountered an extremely high quality score"
+FIX_QUALITY_SCORES=false
+
+#   Where should Picard/GATK store temporary files?
+#       If you've encountered issues with running out of temp space
+#           with picard, you can optionally specify a temp directory
+#       Otherwise, leave blank
+TMP=/scratch.global/liux1299/outgroups-temp
+
+############################################
+##########     SAM_Processing     ##########
+############################################
+
+#   Which queue are we submitting the job to?
+#   Note: For USE_PBS, we can only specify one queue
+#         For USE_SLURM, we can specify multiple queues that are comma separated, no spaces (e.g., "small,ram256g,ram1t")
+SP_QUEUE="small,ram256g,ram1t"
+
+#   USE_SLURM: What are our sbatch settings?
+#       Below are the recommended settings
+SP_SBATCH="--nodes=1 --ntasks-per-node=16 --mem=56gb --tmp=30gb -t 24:00:00 --mail-type=ALL --mail-user=${EMAIL} -p ${SP_QUEUE}"
+
+#   Specify how you would like your SAM files to be processed
+#       Choose from:
+#           'picard' (recommended) or 'samtools'
+METHOD='picard'
+
+#   Number of threads used for SAM_Processing
+#   Using more threads requires more memory
+#       This is ignored when USE_PBS=true
+SAM_PROCESSING_THREADS=
+
+#   Where is the list of read-mapped samples?
+#       To generate this list, use sample_list_generator.sh
+#       located at /sequence_handling/HelperScripts/sample_list_generator.sh
+MAPPED_LIST=/scratch.global/liux1299/barley_outgroups/stampy_mapped/bulbosum_and_pubiflorum_sam_list.txt
+
+#   The next two variables are only used if processing with Picard
+#       If using SAMtools, leave these variables blank
+
+#   What is the maximum number of file handles that we can use?
+#       For UNIX systems, the per-process maximum number of files
+#           that can be open may be found with 'ulimit -n'
+#       We recommend setting MAX_FILES to be slightly under this value
+MAX_FILES=1000
+
+#   What is the maximum number (integer) of records stored in RAM before spilling to disk?
+#       This is used in the Picard SortSam and MarkDuplicates and is ignored if SAM_Processing with Samtools.
+#       You can try reducing this number if you are having core dump/out of memory errors.
+#       Increasing this number reduces the number of file handles needed to sort the file,
+#       and increases the amount of RAM needed.
+#   Default value: 500000
+PICARD_MAX_REC_IN_RAM=500000
+
+#   What is the sorting collection size ratio we want to use?
+#       This is used in Picard MarkDuplicates and is ignored if SAM_Processing with Samtools.
+#       You can try reducing this number if you are having core dump/out of memory errors.
+#   Default value: 0.25
+SORTING_COLL_SIZE_RATIO=0.25
+
+############################################
+##########    Coverage_Mapping    ##########
+############################################
+
+#   Which queue are we submitting the job to?
+#   Note: For USE_PBS, we can only specify one queue
+#         For USE_SLURM, we can specify multiple queues that are comma separated, no spaces (e.g., "small,ram256g,ram1t")
+CM_QUEUE="small"
+
+#   USE_SLURM: What are our sbatch settings?
+#       Below are the recommended settings
+CM_SBATCH="--nodes=1 --ntasks-per-node=16 --mem=22gb --tmp=2gb -t 24:00:00 --mail-type=ALL --mail-user=${EMAIL} -p ${CM_QUEUE}"
+
+#   USE_PBS: What are our Qsub settings for Coverage_Mapping?
+#       Below are the recommended settings
+CM_QSUB="mem=22gb,nodes=1:ppn=16,walltime=24:00:00"
+
+#   Where is the list of finished BAM files?
+#       To generate this list, use sample_list_generator.sh
+#       located at /sequence_handling/HelperScripts/sample_list_generator.sh
+BAM_LIST=
+
+#   For exome capture, use the capture regions file (BED format)
+#   For whole-genome sequencing, leave this blank
+#   Coverage_Mapping should not be used for GBS data
+REGIONS_FILE=
+
+############################################
+##########      Dependencies      ##########
+############################################
+
+#   This section defines installations to
+#       various dependencies for sequence_handling.
+#   If you are using the Minnesota Supercomputing Institute cluster
+#       then uncomment all 'module load' lines.
+#       Make sure you have access to all '_ML' modules.
+#   If you need to install a dependency from source,
+#       then uncomment the lines for the dependency and the
+#       'export PATH=', and write the full path to the executable
+#       for the program. For example:
+#       PARALLEL=${HOME}/software/parallel-20151122/bin/parallel
+#   If you have a system-wide installation for a program, you can
+#       leave all lines commented out. sequence_handling will find
+#       system-wide installed programs automatically.
+
+#   Please visit https://github.com/MorrellLab/sequence_handling/wiki/Dependencies
+#       for information on version requirements and compatibility
+
+if [[ "$MSI" == "true" ]] ; then
+#   Do we have GNU parallel installed
+module load parallel/20190122
+#PARALLEL=
+#export PATH=${PARALLEL}:${PATH}
+
+#   Do we have the Fastx Toolkit installed?
+module load fastx_toolkit/0.0.14
+#FASTX_TOOLKIT=
+#export PATH=${FASTX_TOOLKIT}:${PATH}
+
+#   Do we have FastQC installed?
+module load fastqc/0.11.8
+#FASTQC=
+#export PATH=${FASTQC}:${PATH}
+
+#   Do we have Riss-util installed?
+module load riss_util/1.0
+#RISS_UTIL=
+#export PATH=${RISS_UTIL}:${PATH}
+
+#   Do we have Seqqs installed?
+module load seqqs_ML/3d05375
+#SEQQS=
+#export PATH=${SEQQS}:${PATH}
+
+#   Do we have Sickle installed?
+module load sickle_ML/1.33
+#SICKLE=
+#export PATH=${SICKLE}:${PATH}
+
+#   Do we have Scythe installed?
+module load scythe_ML/0.994
+#SCYTHE=
+#export PATH=${SCYTHE}:${PATH}
+
+#   Do we have R installed?
+module load R/3.6.3
+#R=
+#export PATH=${R}:${PATH}
+#   REQUIRED if running on MSI: Where are the local R libraries stored?
+#   To figure out the path, run the following interactively on MSI:
+#       module load R/3.6.0
+#       R # Start up R session on MSI
+#       Sys.getenv()
+#   Now, look for R_LIBS_USER and paste the path below
+R_LIBS_USER="~/R/x86_64-pc-linux-gnu-library/3.6"
+
+#   Do we have BWA installed?
+module load bwa/0.7.17
+#BWA=
+#export PATH=${BWA}:${PATH}
+
+#   Do we have SAMTools installed?
+module load samtools/1.9
+#SAMTOOLS=
+#export PATH=${SAMTOOLS}:${PATH}
+
+#   Do we have BEDTools 2.17.0 installed?
+module load bedtools/2.17.0
+#BEDTOOLS=
+#export PATH=${BEDTOOLS}:${PATH}
+
+#   Do we have htslib 1.9 installed?
+#HTSLIB=
+#export PATH=${HTSLIB}:${PATH}
+module load htslib/1.9
+
+#   Do we have Freebayes 1.3.1 from commit on 20190710 installed?
+#FREEBAYES=
+#export PATH=${FREEBAYES}:${PATH}
+module load freebayes_ML/1.3.1_20190710
+
+#   Do we have Java installed?
+#module load java/jdk1.8.0_45
+#JAVA=
+#export PATH=${JAVA}:${PATH}
+module load java/openjdk-8_202
+
+#   What is the full file path for the GATK jar file?
+#   You need BOTH the jar file and the module
+GATK_JAR=/panfs/roc/groups/9/morrellp/public/Software/GATK_ML_4.1.2/gatk
+module load gatk/4.1.2
+
+#   What is the full file path for the Picard jar file?
+PICARD_JAR=/panfs/roc/groups/9/morrellp/public/Software/picard_ML_2.23.1/picard.jar
+
+#   Do we have vcftools installed?
+module load vcftools_ML/0.1.14
+#VCFTOOLS=
+#export PATH=${VCFTOOLS}:${PATH}
+
+#   Do we have vcflib installed?
+module load vcflib_ML/1.0.0_rc2
+#VCFLIB=
+#export PATH=${VCFLIB}:${PATH}
+
+#   Do we have python 3 installed?
+module load python3_ML/3.7.1_anaconda
+#PYTHON3=
+#export PATH=${PYTHON3}:${PATH}
+
+#   Do we have analysis installed?
+module load analysis/0.8.2
+#ANALYSIS=
+#export PATH=${ANALYSIS}:${PATH}
+
+#   Do we have bcftools installed?
+module load bcftools/1.10.2
+#BCFTOOLS=
+#export PATH=${BCFTOOLS}:${PATH}
+#   Issue specific to MSI modules as of Mar 1, 2021
+#   Comment out line if not needed.
+#       When loading the bcftools/1.10.2 module, the perl/modules.centos7.5.26.1 module also
+#       gets loaded. When the perl/modules.centos7.5.26.1 module gets loaded, the module
+#       R/3.4.4-tiff also gets loaded. This introduces some R version conflicts since we are
+#       loading R/3.6.3 above. A temporary workaround is to unload R/3.4.4-tiff
+module unload R/3.4.4-tiff
+
+#   Do we have python-epd installed?
+#module load python-epd/1.5.2
+#PYTHON-EPD=
+#export PATH=${PYTHON-EPD}:${PATH}
+module load python3_ML/2.7.13
+
+#   Do we have texlive installed?
+module load texlive/20131202
+#TEXLIVE=
+#export PATH=${TEXLIVE}:${PATH}
+fi
