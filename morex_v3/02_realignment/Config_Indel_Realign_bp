@@ -76,7 +76,7 @@ RTC_QUEUE="small,ram256g,ram1t"
 
 #   USE_SLURM: What are our sbatch settings for Variant_Filtering?
 #       Below are the recommended settings
-RTC_SBATCH="--nodes=1 --ntasks-per-node=16 --mem=42gb --tmp=30gb -t 24:00:00 --mail-type=ALL --mail-user=${EMAIL} -p ${RTC_QUEUE}"
+RTC_SBATCH="--nodes=1 --ntasks-per-node=16 --mem=12gb --tmp=10gb -t 02:00:00 --mail-type=ALL --mail-user=${EMAIL} -p ${RTC_QUEUE}"
 
 #   Where is the list of finished BAM files?
 #       To generate this list, use sample_list_generator.sh
@@ -90,11 +90,11 @@ RTC_BAM_LIST=/panfs/roc/groups/9/morrellp/shared/Datasets/Alignments/barley_outg
 #   Which queue are we submitting the job to?
 #   Note: For USE_PBS, we can only specify one queue
 #         For USE_SLURM, we can specify multiple queues that are comma separated, no spaces (e.g., "small,ram256g,ram1t")
-IR_QUEUE="ram1t,amd2tb"
+IR_QUEUE="small,ram256g,ram1t"
 
 #   USE_SLURM: What are our sbatch settings for Variant_Filtering?
 #       Below are the recommended settings
-IR_SBATCH="--nodes=1 --ntasks-per-node=8 --mem=990gb --tmp=300gb -t 06:00:00 --mail-type=ALL --mail-user=${EMAIL} -p ${IR_QUEUE}"
+IR_SBATCH="--nodes=1 --ntasks-per-node=8 --mem=16gb --tmp=12gb -t 03:00:00 --mail-type=ALL --mail-user=${EMAIL} -p ${IR_QUEUE}"
 
 #   Where is the list of finished BAM files?
 #       To generate this list, use sample_list_generator.sh

@@ -1,9 +1,9 @@
 #!/bin/bash
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=24
+#SBATCH --ntasks-per-node=2
 #SBATCH --mem=60gb
 #SBATCH --tmp=40gb
-#SBATCH -t 90:00:00
+#SBATCH -t 60:00:00
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=liux1299@umn.edu
 #SBATCH -p ram256g,ram1t,amd2tb

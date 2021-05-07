@@ -41,7 +41,11 @@ sbatch stampy-pubiflorum-0.05.sh
 Align murinum split into parts.
 
 ```bash
-sbatch --array=0-15 stampy-murinum-0.03.sh
+# First pass, request 90 hours walltime
+sbatch --array=0-31 stampy-murinum-0.03.sh
+# A handful finished, others need increased walltime
+# Increase walltime to 180 hours for timeout array indices
+sbatch --array=0,2-3,5-18,20,22-30 stampy-murinum-0.03.sh
 ```
 
 #### SAM Processing
@@ -49,7 +53,7 @@ sbatch --array=0-15 stampy-murinum-0.03.sh
 Using `sequence_handling` convert the mapped samples to BAM, mark duplicates, and sort BAM.
 
 ```bash
-# In dir:
+# In dir: ~/sequence_handling
 # SAM_Processing for bulbosum A12 and pubiflorum
 ./sequence_handling SAM_Processing ~/GitHub/Barley_Outgroups/morex_v3/01_mapping/Config_bulbosum_and_pubiflorum
 ```
@@ -59,7 +63,17 @@ Using `sequence_handling` convert the mapped samples to BAM, mark duplicates, an
 H. bulbosum and H. pubiflorum:
 
 ```bash
+# In dir: ~/sequence_handling
 # Bulbosum A12 and pubiflorum
 # RTC
 ./sequence_handling Realigner_Target_Creator ~/GitHub/Barley_Outgroups/morex_v3/02_realignment/Config_Indel_Realign_bp
+# Indel Realigner
+./sequence_handling Indel_Realigner ~/GitHub/Barley_Outgroups/morex_v3/02_realignment/Config_Indel_Realign_bp
+```
+
+## Step 03: Bam to fasta
+
+```bash
+# In dir: ~/GitHub/Barley_Outgroups/morex_v3/03_Bam_to_Fasta
+sbatch --array=0-1 bam_to_fasta-bp.sh
 ```

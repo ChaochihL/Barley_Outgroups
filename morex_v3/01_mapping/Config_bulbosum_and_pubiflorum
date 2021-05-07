@@ -74,7 +74,7 @@ SP_QUEUE="small,ram256g,ram1t"
 
 #   USE_SLURM: What are our sbatch settings?
 #       Below are the recommended settings
-SP_SBATCH="--nodes=1 --ntasks-per-node=16 --mem=56gb --tmp=30gb -t 24:00:00 --mail-type=ALL --mail-user=${EMAIL} -p ${SP_QUEUE}"
+SP_SBATCH="--nodes=1 --ntasks-per-node=16 --mem=56gb --tmp=30gb -t 03:00:00 --mail-type=ALL --mail-user=${EMAIL} -p ${SP_QUEUE}"
 
 #   Specify how you would like your SAM files to be processed
 #       Choose from:

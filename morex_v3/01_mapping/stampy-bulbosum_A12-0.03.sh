@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=24
+#SBATCH --ntasks-per-node=2
 #SBATCH --mem=60gb
 #SBATCH --tmp=40gb
 #SBATCH -t 90:00:00
