@@ -1,0 +1,42 @@
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=16
+#SBATCH --mem=8gb
+#SBATCH --tmp=6gb
+#SBATCH -t 06:00:00
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=liux1299@umn.edu
+#SBATCH -p small,ram256g,ram1t
+#SBATCH -o %j.out
+#SBATCH -e %j.err
+
+set -e
+set -o pipefail
+
+# Dependencies
+module load parallel/20180922
+
+# User provided input arguments
+# Full filepath to list of split fastq files to gzip
+FASTQ_LIST="/scratch.global/liux1299/barley_outgroups/Adapter_Trimming/murinum_split_tiny/split_fastq_list.txt"
+# Full filepath to directory to store GNU parallel log file
+#   Gzipping takes a long time depending on the size of the file. This allows us to resume
+#   the process when resubmitting an unfinished job.
+LOG_FILE_DIR="/scratch.global/liux1299/barley_outgroups/Adapter_Trimming/murinum_split_tiny"
+
+#-------------
+function compress_fastq() {
+    local fastq_file="$1"
+    # Gzip fastq file
+    gzip ${fastq_file}
+}
+
+export -f compress_fastq
+
+# Prepare array of fastq files for parallel processing
+FASTQ_ARR=($(cat ${FASTQ_LIST}))
+
+# Gzip fastq file in parallel
+# Keep job log for parallel processes so upon resubmitting job, parallel can just re-run
+#   files that don't have an exit status of 0.
+parallel --resume-failed --joblog ${LOG_FILE_DIR}/gnu_parallel_resume_failed.log compress_fastq {} ::: ${FASTQ_ARR[@]}

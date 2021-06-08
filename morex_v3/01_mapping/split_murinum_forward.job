@@ -1,0 +1,40 @@
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=8
+#SBATCH --mem=42gb
+#SBATCH --tmp=22gb
+#SBATCH -t 08:00:00
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=liux1299@umn.edu
+#SBATCH -p small,ram256g,ram1t
+#SBATCH -o %j.out
+#SBATCH -e %j.err
+
+set -e
+set -o pipefail
+
+# Dependencies
+module load python3/3.7.1_anaconda
+
+# User provided input arguments
+FASTQ_FILE="/scratch.global/liux1299/barley_outgroups/Adapter_Trimming/murinum_BCC2017_Forward_ScytheTrimmed.fastq.gz"
+# How many pieces do we want to split our file into? (integer)
+NUM_PARTS="32"
+# How many total sequences do we have?
+#   We can get this number by running FastQC and looking at the "Total Sequences"
+#   in the HTML report.
+TOTAL_NUM_SEQS="371255479"
+# Full filepath to our output directory
+OUT_DIR="/scratch.global/liux1299/barley_outgroups/Adapter_Trimming/murinum_split_tiny"
+# Full filepath to split_fastq.py script
+SPLIT_FASTQ_SCRIPT="/panfs/roc/groups/9/morrellp/liux1299/GitHub/Utilities/split_fastq/split_fastq.py"
+
+#-------------
+# Check if out dir exists, if not make it
+mkdir -p ${OUT_DIR}
+
+# Split FASTQ file into n parts
+${SPLIT_FASTQ_SCRIPT} ${FASTQ_FILE} \
+    ${NUM_PARTS} \
+    ${TOTAL_NUM_SEQS} \
+    ${OUT_DIR}
