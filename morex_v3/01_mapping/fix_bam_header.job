@@ -1,0 +1,52 @@
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=8
+#SBATCH --mem=32gb
+#SBATCH --tmp=28gb
+#SBATCH -t 08:00:00
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=liux1299@umn.edu
+#SBATCH -p small,ram256g,ram1t
+#SBATCH -o %j.out
+#SBATCH -e %j.err
+
+set -e
+set -o pipefail
+
+#   Dependencies
+module load parallel/20190122
+module load samtools/1.9
+
+#   User provided arguments
+FIX_BAM_HEADER_SCRIPT=/home/morrellp/liux1299/GitHub/Barley_Outgroups/morex_v2/01_mapping/fixBAMHeader.sh
+TABLE=/scratch.global/liux1299/barley_outgroups/SAM_Processing/Picard/bam_murinum_reheader_table.txt
+PLATFORM=ILLUMINA
+SAMPLE_LIST=/scratch.global/liux1299/barley_outgroups/SAM_Processing/Picard/murinum_split_bam_list.txt
+OUT_DIR=/scratch.global/liux1299/barley_outgroups/reheader_bam
+
+# Check if out dir exists, if not make it
+mkdir -p ${OUT_DIR}
+
+#   Run program
+"${FIX_BAM_HEADER_SCRIPT}" -t "${TABLE}" \
+                           -p "${PLATFORM}" \
+                           -s "${SAMPLE_LIST}" \
+                           -o "${OUT_DIR}"
+
+#   Function to index bam files
+function indexBAM() {
+    local bam_file="$1"
+    #   Create BAI index for BAM file
+    samtools index -b "${bam_file}"
+}
+
+#   Export function
+export -f indexBAM
+
+cd ${OUT_DIR}
+BAM_ARR=($(find $(pwd -P) -name "*reheader.bam" | sort))
+# Index reheader bam files
+parallel indexBAM {} "${OUT_DIR}" ::: "${BAM_ARR[@]}"
+
+# Rename index files
+rename -v ".bam.bai" ".bai" *.bam.bai

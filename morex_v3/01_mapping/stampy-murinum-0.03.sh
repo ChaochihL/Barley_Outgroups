@@ -1,17 +1,16 @@
 #!/bin/bash
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=2
-#SBATCH --mem=30gb
-#SBATCH --tmp=20gb
-#SBATCH -t 80:00:00
+#SBATCH --mem=48gb
+#SBATCH --tmp=30gb
+#SBATCH -t 180:00:00
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=liux1299@umn.edu
-#SBATCH -p ram256g,ram1t,amd2tb
+#SBATCH -p max
 #SBATCH -o stampy-murinum-0.03.sh.%A_%a.out
 #SBATCH -e stampy-murinum-0.03.sh.%A_%a.err
 
 set -e
-set -u
 set -o pipefail
 
 #   This script maps barley outgroup sequences and outputs a SAM file.
@@ -33,9 +32,9 @@ DIVERGENCE='0.03'
 #   Where do our output files go?
 OUT_DIR=/scratch.global/liux1299/barley_outgroups/stampy_mapped
 #   What is our forward read?
-FORWARD_LIST=/scratch.global/liux1299/barley_outgroups/Adapter_Trimming/murinum_split/murinum_forward_parts_list.txt
+FORWARD_LIST=/scratch.global/liux1299/barley_outgroups/Adapter_Trimming/murinum_split_tiny/murinum_split_fwd_list.txt
 #   What is our reverse read?
-REVERSE_LIST=/scratch.global/liux1299/barley_outgroups/Adapter_Trimming/murinum_split/murinum_reverse_parts_list.txt
+REVERSE_LIST=/scratch.global/liux1299/barley_outgroups/Adapter_Trimming/murinum_split_tiny/murinum_split_rev_list.txt
 
 #-----------------
 #   Create an array of fastq.gz files used for job array
@@ -45,6 +44,10 @@ REV_ARR=($(cat ${REVERSE_LIST}))
 #   Get the current sample we are processing
 FWD_SAMPLE=${FWD_ARR[${SLURM_ARRAY_TASK_ID}]}
 REV_SAMPLE=${REV_ARR[${SLURM_ARRAY_TASK_ID}]}
+
+# Determine maximum array limit
+MAX_ARRAY_LIMIT=$[${#FWD_ARR[@]} - 1]
+echo "Maximum array limit is ${MAX_ARRAY_LIMIT}."
 
 function stampy_map() {
     local sample_fwd="$1" # forward sample

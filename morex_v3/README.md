@@ -46,6 +46,7 @@ sbatch --array=0-31 stampy-murinum-0.03.sh
 # A handful finished, others need increased walltime
 # Increase walltime to 180 hours for timeout array indices
 sbatch --array=0,2-3,5-18,20,22-30 stampy-murinum-0.03.sh
+#sbatch --array=15-18,20,22-30 stampy-murinum-0.03.sh
 ```
 
 #### SAM Processing
@@ -56,6 +57,35 @@ Using `sequence_handling` convert the mapped samples to BAM, mark duplicates, an
 # In dir: ~/sequence_handling
 # SAM_Processing for bulbosum A12 and pubiflorum
 ./sequence_handling SAM_Processing ~/GitHub/Barley_Outgroups/morex_v3/01_mapping/Config_bulbosum_and_pubiflorum
+# murinum
+./sequence_handling SAM_Processing ~/GitHub/Barley_Outgroups/morex_v3/01_mapping/Config_murinum
+```
+
+After mapping all H murinum parts (file was split into 32 parts) with Stampy, processing SAM files with `sequence_handling`, and getting finished BAM statistics, the statistics showed between 64.8% - 84% mapped (with 28 out of 32 parts having >82% mapped), 16.36% - 28.79% properly paired, and 1.73% - 8.87% singletons. Previously (Morex v1 and v2), 3% divergence rate had the highest percent mapped (~80%), so we picked 3% divergence rate here for Morex v3. We did not try other divergence rates because each part took much longer to align than previous reference versions, each part took about 4 days to align. In previous reference versions, we also found minimal differences in percent mapped for 3%, 5%, 9%, and 11% divergence rates. So, given that most of the split parts had >82% mapped, we will move forward with the current divergence rate.
+
+#### Murinum reheader and merge bam
+
+```bash
+# In dir: ~/scratch/barley_outgroups/SAM_Processing/Picard
+# Extract old names from BAM files split into parts
+module load samtools/1.9
+for i in $(ls murinum_BCC2017_part*.bam | sort -V)
+do
+    samtools view -H ${i} | grep "@RG" | cut -f 2 | sed -e 's/ID://g' >> old_bam_murinum_names.txt
+done
+
+# Reformat into correct table format to input into fixBAMHeader.sh
+# Make sure this table has trailing new line at the end
+new_name="murinum_BCC2017"
+old_names=$(cat old_bam_murinum_names.txt | tr '\n' ' ')
+echo ${new_name} ${old_names} > bam_murinum_reheader_table.txt
+
+# Look at contents
+cat bam_murinum_reheader_table.txt
+
+# Fix BAM headers by submitting script on MSI
+# In dir: ~/GitHub/Barley_Outgroups/morex_v3/01_mapping
+sbatch fix_bam_header.job
 ```
 
 ## Step 02: Indel realignment
