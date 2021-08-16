@@ -88,6 +88,13 @@ cat bam_murinum_reheader_table.txt
 sbatch fix_bam_header.job
 ```
 
+Merge murinum parts into a single BAM file:
+
+```bash
+# In dir: ~/GitHub/Barley_Outgroups/morex_v3/01_mapping
+sbatch merge_bam.sh
+```
+
 ## Step 02: Indel realignment
 
 H. bulbosum and H. pubiflorum:
@@ -99,11 +106,25 @@ H. bulbosum and H. pubiflorum:
 ./sequence_handling Realigner_Target_Creator ~/GitHub/Barley_Outgroups/morex_v3/02_realignment/Config_Indel_Realign_bp
 # Indel Realigner
 ./sequence_handling Indel_Realigner ~/GitHub/Barley_Outgroups/morex_v3/02_realignment/Config_Indel_Realign_bp
+
+# murinum
+# RTC
+./sequence_handling Realigner_Target_Creator ~/GitHub/Barley_Outgroups/morex_v3/02_realignment/Config_Indel_Realign_murinum
+# Indel Realigner
+./sequence_handling Indel_Realigner ~/GitHub/Barley_Outgroups/morex_v3/02_realignment/Config_Indel_Realign_murinum
 ```
 
 ## Step 03: Bam to fasta
 
 ```bash
 # In dir: ~/GitHub/Barley_Outgroups/morex_v3/03_Bam_to_Fasta
+# Bulbosum and pubiflorum
 sbatch --array=0-1 bam_to_fasta-bp.sh
+
+# Murinum
+sbatch --array=0 bam_to_fasta-murinum.sh
 ```
+
+## Infer ancestral state with ANGSD
+
+If you would like to infer the ancestral state and output a VCF file to use with downstream analyses, you can modify the script [`angsd_anc_inf.job`](https://github.com/ChaochihL/Barley_Outgroups/blob/master/morex_v1/angsd_anc_inf.job) but note that this script was used when processing data relative to Morex v1. Please make sure you modify this script accordingly and use the latest version of ANGSD.
