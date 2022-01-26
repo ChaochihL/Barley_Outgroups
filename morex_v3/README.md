@@ -125,6 +125,31 @@ sbatch --array=0-1 bam_to_fasta-bp.sh
 sbatch --array=0 bam_to_fasta-murinum.sh
 ```
 
-## Infer ancestral state with ANGSD
+## Call ancestral genotypes with ATLAS / Infer ancestral allele with ANGSD
 
-If you would like to infer the ancestral state and output a VCF file to use with downstream analyses, you can modify the script [`angsd_anc_inf.job`](https://github.com/ChaochihL/Barley_Outgroups/blob/master/morex_v1/angsd_anc_inf.job) but note that this script was used when processing data relative to Morex v1. Please make sure you modify this script accordingly and use the latest version of ANGSD.
+The method you choose depends on if you need the ancestral genotypes called (use ATLAS) or just the ancestral allele inferred (ANGSD). For both methods, it is recommended to do some form of realignment around indels.
+
+#### Call ancestral genotypes with ATLAS
+
+If your software requires ancestral genotypes to be called (same format as individual genotypes in a VCF file), you can use ATLAS (https://bitbucket.org/wegmannlab/atlas/wiki/Home). Here are some relevant papers:
+
+- ATLAS software manuscript: Link et al. 2017 bioRxiv. ATLAS: Analysis Tools for Low-depth and Ancient Samples. https://doi.org/10.1101/105346
+- Comparison of GATK vs ATLAS performance when calling genotypes at the phylogenetic level: Duchen and Salamin 2021 Systematic Biology. A Cautionary Note on the Use of Genotype Callers in Phylogenomics. https://doi.org/10.1093/sysbio/syaa081
+
+We'll use ATLAS, but because of its long runtimes and memory requirements for large genomes, we'll first split our realigned H. murinum BAM file by chromosome parts.
+
+```bash
+# In dir: ~/GitHub/Barley_Outgroups/morex_v3/04_Call_Ancestral_GT
+sbatch split_bam_by_chr.sh
+```
+
+Next, we'll follow [ATLAS's recommended pipeline](https://bitbucket.org/wegmannlab/atlas/wiki/Home). The first step is running their `splitMerge` tool. Since we split our realigned BAM file by chromosome parts, we'll run these as job arrays on Slurm.
+
+```bash
+# In dir: ~/GitHub/Barley_Outgroups/morex_v3/04_Call_Ancestral_GT
+sbatch --array=0-13 atlas_splitMerge-murinum.sh
+```
+
+#### Infer ancestral allele with ANGSD
+
+Alternatively, if you would like to infer the ancestral allele for a given set of realigned BAM files, you can run [ANGSD](http://www.popgen.dk/angsd/index.php/ANGSD#Overview) to generate allele frequences and use the `-anc` flag to give it an ancestral FASTA file. ANGSD's `*.mafs.gz` output file will have information on the ancestral allele.
